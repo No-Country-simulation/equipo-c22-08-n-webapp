@@ -24,12 +24,10 @@ export const Adoption = () => {
     //     setSelected(prev=>prev===value ? '')
     // }
 
-
-    console.log(pets?.data)
-    console.log(pets?.data[0]?.imagen)
+    // console.log(pets?.data)
+    // console.log(pets?.data[0]?.imagen)
 
     return <>
-        <Header />
         <main className="flex content-center h-full bg-secondary">
             <section className="w-full h-full m-9 flex-row">
                 <div className="w-full flex">
@@ -102,6 +100,5 @@ export const Adoption = () => {
                 </div>
             </section>
         </main>
-        <Footer />
     </>
 }

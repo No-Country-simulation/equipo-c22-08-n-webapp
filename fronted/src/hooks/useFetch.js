@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
-
+//Para recibir data de un API
 export const useFetch = (url)=> {
     const [data,setData] = useState(null);
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(null);
 
     useEffect(()=>{
+        //Lo usan para cerrar una peticion
         const controller = new AbortController();
         setLoading(true)
         const fetchData = async()=>{
