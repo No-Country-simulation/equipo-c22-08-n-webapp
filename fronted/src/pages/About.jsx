@@ -1,6 +1,6 @@
 
 
-export default function About() {
+export default function RecoverPassword() {
 
     return (
 

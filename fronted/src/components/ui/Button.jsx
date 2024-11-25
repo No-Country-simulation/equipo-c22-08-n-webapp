@@ -7,6 +7,7 @@ const Button = ({
   bgColor = 'bg-verde-lila',
   iconPosition = 'start',
   className = '',
+  disabled = false,
 }) => {
   const isArray = Array.isArray(children);
   const icon = isArray && React.isValidElement(children[1]) ? children[1] : null;
@@ -16,10 +17,10 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={`
         bg-${bgColor} 
-        bg-opacity-90
-        hover:bg-opacity-100
+        ${disabled ? 'bg-opacity-50 cursor-not-allowed' : ''}
         rounded-lg 
         text-lg 
         px-5 
@@ -30,12 +31,10 @@ const Button = ({
         flex 
         items-center 
         justify-center
-       
         ${className}
       `}
     >
 
-       
         {/* transition-all 
         duration-300
         before:absolute 
@@ -49,7 +48,6 @@ const Button = ({
         hover:brightness-110
         active:brightness-90 */}
 
-        
       {icon && iconPosition === 'start' && (
         <span className="mr-1">{icon}</span>
       )}

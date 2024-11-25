@@ -4,10 +4,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 
-const Carousel = ({ slides }) => {
+const CardsCarusel = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [cardsToShow, setCardsToShow] = useState(1);  
 
+
+      console.log('slides')
+      console.log(slides)
   useEffect(() => {
     updateCardsToShow();  
     window.addEventListener('resize', updateCardsToShow);  
@@ -58,28 +61,31 @@ const Carousel = ({ slides }) => {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
-          initial={{ opacity: 0, x: 500 }}
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="w-full flex gap-4 justify-between"
         >
           {getCurrentCards().map((slide, index) => (
             <Card
               key={index}
-              image={slide.image}
-              title={slide.title}
-              description={slide.description}
-              vacunas={slide.vacunas}
+              id={slide?.id}
+              image={slide?.image}
+              title={slide?.title}
+              redirect={true}
+              description={slide?.description}
+              vacunas={slide?.vacunas}
               selectedCard={true}
               sectionDetails={true}
               className="bg-secondary w-full sm:w-1/2 lg:w-1/3"
             >
-              {slide.buttonText}
+              {slide?.buttonText}
             </Card>
           ))}
         </motion.div>
       </AnimatePresence>
+      
 
       <Button
         onClick={prevSlide}
@@ -105,23 +111,8 @@ const Carousel = ({ slides }) => {
       >
         <ChevronRight className="text-secondary" />
       </Button>
-
-      {/* Puntos de navegación (dots) */}
-      {/* <div className="absolute 
-            bottom-1 left-1/2 -translate-x-1/2 
-            flex space-x-2 overflow-hidden 
-            max-w-[calc(5*1rem)]"
-            >
-        {slides.slice(0, MAX_DOTS).map((_, index) => (
-          <div
-            key={index}
-            className={`w-5 h-3 mt-5 rounded-full transition-all duration-300
-              ${index === currentIndex ? 'bg-orange w-20' : 'bg-yellow'}`}
-          />
-        ))}
-      </div> */}
     </div>
   );
 };
 
-export default Carousel;
+export default CardsCarusel;

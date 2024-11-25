@@ -3,8 +3,8 @@ import React from 'react';
 const Image = ({ 
   src, 
   alt, 
-  width = 1400, 
-  height = 1400, 
+  width , 
+  height , 
   className = '',
   setAnimation = false,
   objectFit = 'cover'
@@ -30,13 +30,13 @@ const Image = ({
         alt={alt}
         loading="lazy"
         className={`
-          absolute 
           inset-0 
           w-full 
           h-full 
           object-${objectFit} 
           transition-all 
-          duration-500 
+          duration-700 
+          ease-in-out 
           cursor-pointer 
           ${!setAnimation ? ' filter grayscale hover:grayscale-0' : ''}
         `}

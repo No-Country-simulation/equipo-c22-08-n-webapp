@@ -1,153 +1,119 @@
-import  { useState } from 'react';
-import { 
-  Button, 
-  TextField, 
-  Card, 
-  CardContent, 
-  CardActions, 
-  Typography, 
-  Container, 
-  Box,    
-  IconButton,
-  InputAdornment
-} from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Mail, Lock, Github, Facebook, Twitter, HeartHandshake } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import Button  from '@/components/ui/button';
+import InputForm from '@/components/ui/InputForm';
 
-import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-import { styled } from '@mui/material/styles';
-import LockIcon from '@mui/icons-material/Lock';
-import PetsIcon from '@mui/icons-material/Pets';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
-const GradientBackground = styled('div')({
-  minHeight: '100vh',
-  background: 'linear-gradient(to bottom right, #e0c3fc, #8ec5fc)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});   
-
-const AnimatedPawPrint = styled(PetsIcon)({
-  textColor: 'red',
-  animation: 'bounce 2s infinite',
-  '@keyframes bounce': {
-    '0%, 100%': { transform: 'translateY(10)' },
-    '50%': { transform: 'translateY(-10px)' },
-  },
+// Define validation schema
+const loginSchema = z.object({
+  email: z.string()
+   .email({ message: 'Ingrese un correo electrónico válido' })
+    .min(1, { message: 'El email es requerido' }),
+  password: z.string()
+    .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
+    .regex(/(?=.*[a-z])/, { message: 'Debe contener al menos una letra minúscula' })
+    .regex(/(?=.*[A-Z])/, { message: 'Debe contener al menos una letra mayúscula' })
+    .regex(/(?=.*[0-9])/, { message: 'Debe contener al menos un número' }),
 });
 
-export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+const Login = () => {
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   // Handle login logic here   
-  //   console.log('Login attempted with:', email, password);
-  // };
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const handleInputChange = (name, value) => {
+    setValue(name, value, { shouldValidate: true });
   };
 
+  const onSubmit = (data) => {
+    console.log('Form submitted:', data);
+  };
+     
+
   return (
-    <GradientBackground>
-      <Container component="main" maxWidth="xs">
-        <Card sx={{ mt: 8, mb: 8, borderRadius: 2, boxShadow: 3, backgroundColor:"#FEAE6F" }}>
-          <CardContent>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <AnimatedPawPrint sx={{ m: 1, fontSize: 40, color: '#1E3E62' }} />
-              <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
-                Mascotas Login
-              </Typography>
-              <form   style={{  width: '100%' }}>
-                <TextField
-                // variant="standard"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  placeholder='cuidatumascota@gmail.com'
-                  value={email}
-                  sx={{backgroundColor: 'transparent'}}
-                  onChange={(e) => setEmail(e.target.value)}
-                  slotProps={{
-                    input: {
-                      startAdornment: <InputAdornment position="start">
-                                <Person2OutlinedIcon />
-                              </InputAdornment>
-                    },
-                  }}
-                />
+        <div className="p-8 bg-white-2">
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold mb-2">Welcome PetFriend 😊</h1>
+            <p className="text-gray-dark text-sm">
+             Conecta con este gran mundo de las mascotas y hazlas felices 
+            </p>
+          </div>
 
-                <TextField
-                // variant="standard"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type={showPassword ? 'text' : 'password'}
-                  id="password"
-                  autoComplete="current-password"
-                  value={password}
-                  placeholder='********'
-                  onChange={(e) => setPassword(e.target.value)}
-                  slotProps={{
+          <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-2">
+          
+              <InputForm
+                type="email"
+                placeholder="Email Address"
+                icon={Mail}
+                 error={errors.email?.message}
+              {...register('email')}
+              onChange={(value) => handleInputChange('email', value)}
+                className="focus:ring-1 focus:ring-beige focus:border-beige"
+              />
 
-                     input: {
-                      startAdornment: (
-                      <InputAdornment position="start">
-                                <LockIcon />
-                              </InputAdornment>
-                      ),
-                      endAdornment: (  
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleTogglePasswordVisibility}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                        </IconButton>
-                      </InputAdornment>),
-                    },
+              <InputForm
+                type="password"
+                placeholder="Password"
+                icon={Lock}
+              error={errors.password?.message}
+              {...register('password')}
+              onChange={(value) => handleInputChange('password', value)}
+                className="focus:ring-1 focus:ring-beige focus:border-beige"
+              />
 
-                  }}
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ backgroundColor: '#1E3E62', mt: 3, mb: 2 }}
-                  startIcon={<AccountCircle />}
-                >
-                  Iniciar sesión
-                </Button>
-              </form>
+            </div>
 
-            </Box>
-          </CardContent>
-          <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
-            <Typography variant="body2" color="text.secondary">
-              ¿No tienes una cuenta? <a href="#" style={{ color: 'inherit', fontWeight: 'bold' }}>click aqui</a>
-            </Typography>
-          </CardActions>
-        </Card>
+            <div className="flex items-center justify-between">
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" 
+                className="rounded focus:ring-orange" />
+                <span className="text-sm ">Recordar</span>
+              </label>
+              <Link 
+                to="/recover-password"  
+                className="text-sm text-primary">¿Olvidaste tu contraseña?
+              </Link>
+            </div>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap:5, width: '100%', alignItems:"center"}}>
-          {[...Array(3)].map((_, index) => (
-            <AnimatedPawPrint key={index} sx={{ color: '#1E3E62', fontSize: 30, animationDelay: `${index * 0.5}s` }} />
-          ))}
-        </Box>
-      </Container>
-    </GradientBackground>
+            <Button
+              type="submit"
+              className="w-full bg-secondary text-beige  
+              font-bold py-3 rounded-lg  transition"
+            >
+              Adopta Ahora
+              <HeartHandshake/>
+            </Button>
+
+            <div className="text-center">
+              <Link to={'/create-account'} 
+                className="text-sm text-gray-dark mb-4">O crea tu cuenta </Link>
+              {/* <div className="flex justify-center space-x-4">
+                <button className="p-2 rounded-full bg-gray-50 hover:bg-gray-100 transition">
+                  <Github className="w-5 h-5 text-gray-600" />
+                </button>
+                <button className="p-2 rounded-full bg-gray-50 hover:bg-gray-100 transition">
+                  <Facebook className="w-5 h-5 text-gray-600" />
+                </button>
+                <button className="p-2 rounded-full bg-gray-50 hover:bg-gray-100 transition">
+                  <Twitter className="w-5 h-5 text-gray-600" />
+                </button>
+              </div> */}
+            </div>
+          </form>
+        </div>
+     
   );
-}
+};
+
+export default Login;
+
+     

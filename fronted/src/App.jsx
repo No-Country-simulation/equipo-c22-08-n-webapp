@@ -1,22 +1,15 @@
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+// import { BrowserRouter } from 'react-router-dom';
+// import RoutesConfig from '@/components/routes';
 
-import About from '@/pages/About';
-import Index from '@/pages/Index';
+// function App() {
+//   return (
+//     <div className="App">
+//       <BrowserRouter>
+//         <RoutesConfig />
+//       </BrowserRouter>
+//     </div>
+//   );
+// }
 
-
-function App() {
-
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route index path='/' element={<Index />} />
-        <Route path="/about" element={ <About />
-      } /> 
-              
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default App;
+// export default App;

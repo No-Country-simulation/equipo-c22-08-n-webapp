@@ -16,7 +16,7 @@ const Input = ({
   const handleChange = (e) => {
     setInputValue(e.target.value);
     if (onChange) {
-      onChange(e.target.value); // Llamar al callback proporcionado por el padre, si existe
+      onChange(e.target.value); 
     }
   };
 
