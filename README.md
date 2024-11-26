@@ -15,7 +15,7 @@
   
 - **`assets/`**: Archivos estáticos, como imágenes, iconos y otros recursos visuales.
 
-Este formato en Markdown debería mostrarse correctamente cuando lo visualices en un entorno compatible con Markdown, como un repositorio en GitHub o un editor de texto.
+
 
 
 
