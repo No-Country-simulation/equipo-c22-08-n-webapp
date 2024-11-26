@@ -1,104 +1,97 @@
 import Header from "../components/layout/Header"
 import Footer from "../components/layout/Footer"
 // import { useContext, useEffect, useState } from "react"
-import Image from "../components/ui/Image"
+// import Image from "../components/ui/Image"
 import { useFetch } from "../hooks/useFetch"
 import Card from "../components/ui/Card.jsx"
+// import { useContext } from "react"
+import DogIconButton from "../components/ui/DogIconButton.jsx"
+import CatIconButton from "../components/ui/CatIconButton.jsx"
+import { CirclePlus, Stethoscope } from "lucide-react"
 import { useState } from "react"
-// import { Context } from "../store/appContext"
+import { Filter, FilterBy } from "../components/ui/Filter.jsx"
+//  import { Context } from "../store/appContext"
+const tamano= ["Pequeño", "Mediano", "Grande"]
+const sexo = ["Hembra", "Macho"]
 
-const filterby = {
-    activity: ["Bajo", "Medio", "Alto"],
-    peso: ["0 - 13 kg", " 14 - 27 kg", "28 - 41 kg"],
-    tamano: ["Pequeño", "Mediano", "Grande"],
-    sexo: ["Hembra", "Macho"],
-    edad: ["6 meses - 1 año", "1 - 3 años", "4 - 7 años", "7 + años"]
-}
+
 
 export const Adoption = () => {
     // const {store,actions} = useContext(Context);
     const { data: pets, loading, error } = useFetch("https://huachitos.cl/api/animales");
+    const [isActive, setIsActive] = useState(false);
+    const [isActiveDog,setIsActiveDog] = useState(false);
+
+    const handlePetButton = () => {
+        setIsActive(!isActive);
+    };
+
     // const [selected, setSelected] = useState(false);
 
     // const selectHandler = (value)=>{
     //     setSelected(prev=>prev===value ? '')
     // }
 
-    // console.log(pets?.data)
-    // console.log(pets?.data[0]?.imagen)
+    console.log(pets?.data)
+
 
     return <>
-        <main className="flex content-center h-full bg-secondary">
-            <section className="w-full h-full m-9 flex-row">
-                <div className="w-full flex">
-                    <section className="mr-2">
-                        <h1>FILTRAR POR:</h1>
-                        <div className="flex flex-col">
-                            <hr />
-                            <div className=" w-full h-[150px] flex flex-col justify-evenly border-t">
-                                <h2>Actividad</h2>
-                                <div className="flex flex-col align-baseline items-start gap-y-2">
-                                    {filterby.activity.map(e => (<div className="flex justify-evenly" onClick={()=>{}}><input type="checkbox" /> <p>{e}</p></div>))}
-                                </div>
-                            </div>
-                            
-                            <div className=" w-full h-[150px] flex flex-col justify-evenly border-t">
-                                <h2>Peso</h2>
-                                <div className="flex flex-col align-baseline items-start gap-y-2">
-                                    {filterby.peso.map(e => (<div className="flex justify-evenly"><input type="checkbox" /> <p>{e}</p></div>))}
-                                </div>
-                            </div>
-                            
-                            <div className=" w-full h-[150px] flex flex-col justify-evenly border-t">
-                                <h2>Tamaño</h2>
-                                <div className="flex flex-col align-baseline items-start gap-y-2">
-                                    {filterby.tamano.map(e => (<div className="flex justify-evenly"><input type="checkbox" /> <p>{e}</p></div>))}
-                                </div>
-                            </div>
-                            
-                            <div className=" w-full h-[150px] flex flex-col justify-evenly border-t">
-                                <h2>Sexo</h2>
-                                <div className="flex flex-col align-baseline items-start gap-y-2">
-                                    {filterby.sexo.map(e => (<div className="flex justify-evenly"><input type="checkbox" /> <p>{e}</p></div>))}
-                                </div>
-                            </div>
-                            
-                            <div className=" w-full h-[150px] flex flex-col justify-evenly border-t">
-                                <h2>Edad</h2>
-                                <div className="flex flex-col align-baseline items-start gap-y-2">
-                                    {filterby.edad.map(e => (<div className="flex justify-evenly"><input type="checkbox" /> <p>{e}</p></div>))}
-                                </div>
-                            </div>
+        <main className="h-full bg-secondary min-w-52">
+            <div className="flex flex-row justify-center px-6 py-8">
+                <section className="mr-2 lg:1/4 hidden xl:block mt-20 ps-4">
+                <h2>Filtrar por:</h2>
+                    <Filter>
+                        <FilterBy title="Tamaño" type={tamano}/>
+                        <FilterBy title="Sexo" type={sexo}/>
+                    </Filter>
+                </section>
+                <section className="w-full lg:3/4">
+                    <article>
+                        <div className="h-20 flex justify-center" onClick={() => { }}>
+                            <button
+                                onClick={handlePetButton}
+                                className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none"
+                                aria-label="Dog Icon Button"
+                                aria-pressed={isActive}
+                            >
+                                <DogIconButton isActive={isActive} />
+                            </button>
+                            <button
+                                onClick={handlePetButton}
+                                className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none"
+                                aria-label="Cat Icon Button"
+                                aria-pressed={isActive}
+                            >
+                                <CatIconButton isActive={isActive} />
+                            </button>
                         </div>
-                    </section>
-                    <section className="w-full content-center">
-                        <article>
-                            <div className="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
-                                {pets?.data && pets?.data.map(e => (
-                                    // <div className="w-full h-64 overflow-hidden">
-                                    //     {/* <Image
+                        <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4">
+                            {pets?.data && pets?.data.map(e => (
+                                // <div className="w-full h-64 overflow-hidden">
+                                //     {/* <Image
+                                //         src={e.imagen}
+                                //         alt="imagen de mascota"
+                                //         objectFit="scale-down"
+                                //     /> */}
+                                //     <img src={e?.imagen} alt="" />
+                                // </div>
+                                <Card
+                                    image={e?.imagen}
+                                    selectedCard={false}
+                                    setAnimation={true}
+                                    heightNoImage="40"
+                                    title={e?.nombre}
+                                    edad={e?.edad}
+                                    className="bg-beige min-h-28 text-secondary"
+                                    sectionDetails={true}
+                                    vacunas={e?.vacunas}
+                                />
+                            ))}
+                        </div>
+                    </article>
+                </section>
+            </div>
 
-                                    //         src={e.imagen}
-                                    //         alt="imagen de mascota"
-                                    //         objectFit="scale-down"
-                                    //     /> */}
-                                    //     <img src={e?.imagen} alt="" />
-                                    // </div>
-
-                                    <Card
-                                        image={e?.imagen}
-                                        setAnimation={true}
-                                        selectedCard={false}
-                                        heightNoImage="40"
-                                        className="bg-secondary min-w-28 min-h-28"
-                                    />
-
-                                ))}
-                            </div>
-                        </article>
-                    </section>
-                </div>
-            </section>
         </main>
     </>
 }

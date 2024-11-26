@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
      pets:[],
      users:[],
+     selectedPet:[id]
     },
     actions: {
       getpets: (src)=>{
@@ -12,6 +13,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getUser: (src)=>{
         setStore({...users,"users":useFetch(src)})
+      },
+      setPet: (id)=>{
+        setStore({"selectedPet":id})
       }
     }
   };
