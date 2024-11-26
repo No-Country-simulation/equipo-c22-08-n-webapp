@@ -7,12 +7,11 @@ const Input = ({
   value = '',
   onChange,
   className = '',
-  focusClass = 'focus:ring-2 focus:ring-blue-500',  // Clases para el enfoque (puedes personalizar)
-  borderClass = 'border-gray-300',  // Clases para el borde (puedes personalizar)
+  focusClass = 'focus:ring-2 focus:ring-blue-500', 
+  borderClass = 'border-gray-300', 
 }) => {
   const [inputValue, setInputValue] = useState(value);
 
-  // Función para manejar los cambios en el input
   const handleChange = (e) => {
     setInputValue(e.target.value);
     if (onChange) {

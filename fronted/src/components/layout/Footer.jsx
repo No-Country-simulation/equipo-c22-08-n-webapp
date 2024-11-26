@@ -6,9 +6,8 @@ import Button from '@/components/ui/Button';
 import { PawPrint, Home, DollarSign, LogIn, } from 'lucide-react'
 
 
-const Footer = () => {
-
-const [email, setEmail] = useState('');
+const Footer = () => {  
+  const [email, setEmail] = useState('');
 
   const handleEmailChange = (newValue) => {
     setEmail(newValue);
@@ -19,8 +18,8 @@ const [email, setEmail] = useState('');
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-between">
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
-              <h3 className="text-xl font-bold mb-2">PetPals</h3>
-              <p>Conectando mascotas desde 2024</p>
+              <h3 className="text-xl font-bold mb-2">Patitas Felices</h3>
+              <p>Conectando mascotas desde {new Date().getFullYear()}</p>
             </div>
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
               <h3 className="text-xl font-bold mb-2">¿Qué quieres hacer?</h3>
@@ -28,7 +27,7 @@ const [email, setEmail] = useState('');
                 <li>
                   <Link
                     to="/adopt"
-                    className=" hover:text-green-lila px-3 py-2 rounded-md  font-medium"
+                    className=" hover:text-green-lila px-3 py-2 rounded-md font-medium"
                   >
                     <Home className="inline-block mr-1" size={18} />
                     Adopta
@@ -37,7 +36,7 @@ const [email, setEmail] = useState('');
                 <li>
                  <Link
                   to="/donate"
-                  className=" hover:text-green-lila px-3 py-2 rounded-md  font-medium"
+                  className=" hover:text-green-lila px-3 py-2 rounded-md font-medium"
                 >
                   <DollarSign className="inline-block mr-1" size={18} />
                   Donar

@@ -53,7 +53,6 @@ const CreateAccount = () => {
     // Aquí irá la lógica de envío del formulario
   };
 
-  // Función auxiliar para manejar los cambios en InputForm
   const handleInputChange = (name, value) => {
     setValue(name, value, { shouldValidate: true });
   };
@@ -144,20 +143,20 @@ const CreateAccount = () => {
               </label>
             </div>
             {errors.userType && (
-              <p className="text-red-500 text-xs mt-1">{errors.userType.message}</p>
+              <p className="text-red text-xs mt-1">{errors.userType.message}</p>
             )}
           </div>
 
           <Button
             type="submit"
             iconPosition="end"
-            className="w-full bg-secondary text-beige font-bold py-3 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-secondary text-beige font-bold py-3 rounded-lg  transition"
           >
             Crear Cuenta
             {/* <SquarePlus /> */}
           </Button>
 
-          <p className="text-center text-sm text-gray-600 mt-4">
+          <p className="text-center text-sm text-gray mt-4">
             ¿Ya tienes una cuenta?{' '}
             <Link to="/login" className="text-blue-600 hover:underline">
               Iniciar Sesión
