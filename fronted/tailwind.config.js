@@ -18,6 +18,7 @@ export default {
       'orange':'#FFA07A',
       'orange-hover':'#FF9066',
       'transparent': '#00000000',
+      'red': "#982B1C"
       
     },
     fontFamily: {
