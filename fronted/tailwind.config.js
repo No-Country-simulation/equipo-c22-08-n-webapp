@@ -2,7 +2,7 @@
 export default {
   content: ['./src/**/*.{html,jsx,js}'],
   theme: {
-    colors: {
+    colors: { 
       'primary': '#153448',
       'secondary': '#3C5B6F',
       'beige': '#DFD0B8',
