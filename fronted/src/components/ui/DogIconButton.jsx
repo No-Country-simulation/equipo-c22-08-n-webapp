@@ -11,7 +11,7 @@ const DogIconButton = ({isActive}) => {
       >
         <g
           className={`transform origin-center transition-all duration-300 rotate-[0deg] ${
-            isActive ? 'rotate-[30deg]' : 'rotate-[0deg]'
+            isActive ? 'rotate-[30deg] scale-125' : 'rotate-[0deg]'
           }`}
         >
           {/* Contorno principal */}
