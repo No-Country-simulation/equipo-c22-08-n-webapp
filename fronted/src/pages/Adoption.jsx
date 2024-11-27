@@ -5,12 +5,12 @@ import CatIconButton from "../components/ui/CatIconButton.jsx"
 import { useEffect, useRef, useState } from "react"
 import { Filter, FilterBy } from "../components/ui/Filter.jsx"
 import Button from "../components/ui/Button.jsx"
-import { Sliders } from "lucide-react"
+import { Sliders, Stethoscope } from "lucide-react"
 import { FindForm } from "../components/ui/FindForm.jsx"
 const tamano = ["Pequeño", "Mediano", "Grande"]
 const sexo = ["Hembra", "Macho"]
 
-export const Adoption = () => {
+const Adoption = () => {
     const { data: pets, loading, error } = useFetch("https://huachitos.cl/api/animales");
     const [isActiveDog, setIsActiveDog] = useState(false);
     const [isActiveCat, setIsActiveCat] = useState(false);
@@ -18,9 +18,8 @@ export const Adoption = () => {
     const [selectedTamano, setSelectedTamano] = useState(null);
     const [selectedSexo, setSelectedSexo] = useState(null);
     const [isMoreFilters, setMoreFilters] = useState(false);
-    const formSearch = useRef();
-
-    const gridContainer = useRef();
+    const searchRef = useRef();
+    console.log(searchRef.current)
 
     //segundo useEffect, es necesario para poder setear el valor inicial de filtered(osea sin filtro)
     useEffect(() => {
@@ -57,12 +56,15 @@ export const Adoption = () => {
         }
     };
 
-    const onSubmitHandlerForm = () => { 
-        
+    const onSubmitSearchForm = (e) => {
+        e.preventdefault()
+    }
+    const onSubmitHandlerForm = (e) => {
+        e.preventdefault()
     }
 
-    const handleIsMoreFilters = ()=>{
-        setMoreFilters(prev=>!prev)
+    const handleIsMoreFilters = () => {
+        setMoreFilters(prev => !prev)
     }
 
     return (
@@ -97,17 +99,17 @@ export const Adoption = () => {
                                     aria-label="Dog Icon Button"
                                     aria-pressed={isMoreFilters}
                                 >
-                                    <Sliders/>
+                                    <Sliders />
                                 </button>
-                            </div>                            
+                            </div>
                             <Filter onSubmitHandlerForm={onSubmitHandlerForm} isMoreFilters={isMoreFilters}>
                                 <FilterBy
                                     title="Tamaño"
                                     options={tamano}
                                     selectedOption={selectedTamano}
                                     setSelectedOption={setSelectedTamano}
-                                />                       
-                          
+                                />
+
                                 <FilterBy
                                     title="Sexo"
                                     options={sexo}
@@ -115,27 +117,27 @@ export const Adoption = () => {
                                     setSelectedOption={setSelectedSexo}
                                 />
                             </Filter>
-                            <FindForm/>
+                            <FindForm onSubmitSearchForm={onSubmitSearchForm} searchRef={searchRef}/>
                         </article>
-                        <article> 
-                            <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4" ref={gridContainer}>
-                                {filtered && filtered.map(e => (
-                                    <>
-                                        <Card
-                                            key={e?.id}
-                                            image={e?.imagen}
-                                            selectedCard={false}
-                                            setAnimation={true}
-                                            heightNoImage="40"
-                                            title={e?.nombre}
-                                            edad={e?.edad}
-                                            className="bg-beige min-h-28 text-secondary"
-                                            sectionDetails={true}
-                                            vacunas={e?.vacunas}
-                                        >
-                                            Activ
-                                        </Card >
-                                    </>
+                        <article>
+                            <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4" >
+                                {filtered && filtered.map((e) => (
+                                    <Card
+                                        key={e?.id}
+                                        id={e?.id}
+                                        image={e?.imagen}
+                                        selectedCard={false}
+                                        setAnimation={true}
+                                        title={e?.nombre}
+                                        edad={e?.edad}
+                                        className="bg-beige min-h-28 text-secondary"
+                                        sectionDetails={true}
+                                        description={""}
+                                        vacunas={e?.vacunas}
+                                        sexo={e?.genero}
+                                    >
+                                       l
+                                    </Card >
 
                                 ))}
                             </div >
@@ -146,3 +148,5 @@ export const Adoption = () => {
         </>
     );
 };
+
+export default Adoption

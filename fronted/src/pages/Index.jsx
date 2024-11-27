@@ -26,20 +26,20 @@ export default function Index() {
           vacunas: animal.vacunas,
           buttonText: 'Adopt Me!'
         }));
-        
+
         setSlides(fetchedSlides);
-        setLoading(false); 
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        setLoading(false); 
+        setLoading(false);
       });
   }, []);
 
   return (
     <div className="min-h-screen font-serif">
       {/* <Header /> */}
-      
+
       <main className="mx-auto px-4 sm:px-6 bg-primary lg:px-8 py-12 text-white-2">
         <div className="bg-white rounded-lg  overflow-hidden mx-auto max-w-7xl">
           <div className="text-center flex flex-col items-center">
@@ -48,7 +48,7 @@ export default function Index() {
             <Button
               bgColor="secondary"
               hoverColor="green-lila"
-            
+
               onClick={() => console.log('Adopting started!')}
             >
               Adopta
@@ -57,24 +57,24 @@ export default function Index() {
           </div>
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card 
-              image={whyAdopt} 
-              title="¿Adoptar?" 
+            <Card
+              image={whyAdopt}
+              title="¿Adoptar?"
               setAnimation={true}
               selectedCard={false}
               heightNoImage=""
               phaseMotivation="Adoptar es ofrecer un hogar a un corazón perdido y recibir un amor que no conoce condiciones"
-              description="Al abrir tu hogar a un animal, le das la oportunidad de renacer en un ambiente lleno de cariño, mientras te enseñan a amar sin reservas. Adoptar transforma vidas, la tuya y la de ese ser que solo espera darte su amor sincero, mostrando lealtad y ternura en cada mirada." 
+              description="Al abrir tu hogar a un animal, le das la oportunidad de renacer en un ambiente lleno de cariño, mientras te enseñan a amar sin reservas. Adoptar transforma vidas, la tuya y la de ese ser que solo espera darte su amor sincero, mostrando lealtad y ternura en cada mirada."
               className="bg-secondary"
             />
-            <Card 
-              image={ourMission} 
+            <Card
+              image={ourMission}
               selectedCard={false}
-                setAnimation={true}
-                heightNoImage=""
-              title="Nuestra Misión" 
-              phaseMotivation= "Nuestro refugio, lugar donde los corazones perdidos encuentran el amor que siempre merecieron"
-              description="En cada rincón de nuestro refugio, cada animal herido o asustado encuentra consuelo y cariño. Les ofrecemos más que un techo: les damos esperanza, cuidado y el amor que nunca tuvieron. Aquí, cada vida es importante, y cada rescate es una nueva oportunidad para renacer. Al encontrar su hogar definitivo, estos seres saben que han encontrado un lugar donde finalmente son amados."  
+              setAnimation={true}
+              heightNoImage=""
+              title="Nuestra Misión"
+              phaseMotivation="Nuestro refugio, lugar donde los corazones perdidos encuentran el amor que siempre merecieron"
+              description="En cada rincón de nuestro refugio, cada animal herido o asustado encuentra consuelo y cariño. Les ofrecemos más que un techo: les damos esperanza, cuidado y el amor que nunca tuvieron. Aquí, cada vida es importante, y cada rescate es una nueva oportunidad para renacer. Al encontrar su hogar definitivo, estos seres saben que han encontrado un lugar donde finalmente son amados."
               className="bg-secondary"
             />
           </div>

@@ -2,7 +2,7 @@ import { FindForm } from "./FindForm";
 
 export const Filter = ({ children,isMoreFilters=false,onSubmitHandlerForm }) => {
     return (
-        <section className="mr-2 lg:1/4 xl:block mt-3 ps-4 sticky top-0 sm:flex">        
+        <section className="mr-2 lg:1/4 xl:block mt-3 ps-4 sticky top-0 flex flex-col sm:flex sm:flex-row justify-center">        
             {isMoreFilters && children}
         </section>
     );
@@ -14,8 +14,7 @@ export const FilterBy = ({ title, options, selectedOption, setSelectedOption }) 
             <h3 className="font-medium text-lg mb-2">{title}</h3>
             <div className="flex gap-2">
                 {options.map((option, index) => (
-                    <label key={index} className="flex items-center gap-2 cursor-pointer">
-                       
+                    <label key={index} className="flex items-center gap-2 cursor-pointer">                       
                         <input
                             type="radio"
                             name={title} // Este atributo agrupa los radios dentro de cada filtro

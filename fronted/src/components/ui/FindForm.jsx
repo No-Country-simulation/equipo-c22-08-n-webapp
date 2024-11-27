@@ -1,15 +1,14 @@
 import { Search } from "lucide-react"
 import Input from "./Input"
-import Button from "./Button"
 
-export const FindForm = ({ onSubmitHandlerForm }) => {
+export const FindForm = ({ onSubmitSearchForm,searchRef }) => {
     return (
-        <form onClick={onSubmitHandlerForm} className="mb-4">
+        <form onSubmit={onSubmitSearchForm} className="mb-4">
             <div className="w-full flex justify-center">
-                <Input type="text" className="w-3/4" />
-                <Button>
+                <Input type="text" className="w-3/4" ref={searchRef} />
+                <button type="submit">
                     <Search />
-                </Button>
+                </button>
             </div>
         </form>
     )
