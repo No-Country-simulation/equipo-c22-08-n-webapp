@@ -36,11 +36,11 @@ const Card = ({ image,id, redirect= false, title, description,phaseMotivation, s
       onMouseLeave={handleMouseLeave}
     >
       {redirect ? (
-        <Link to={`/adopt/${id}`} className="block w-full font-serif ">
+        <Link to={`/adopt/${id}`} className="block w-full font-sans ">
           {renderCardContent()}
         </Link>
       ) : (
-        <div className="block w-full font-serif">
+        <div className="block w-full font-sans">
           {renderCardContent()}
         </div>
       )}
@@ -88,7 +88,7 @@ const Card = ({ image,id, redirect= false, title, description,phaseMotivation, s
           e.preventDefault();
           handleAdoptClick(id);
           }}
-          className="mt-4 text-black block w-full font-serif font-extrabold"
+          className="mt-4 text-black block w-full font-sans font-extrabold"
         >
           <Button
           bgColor="orange"

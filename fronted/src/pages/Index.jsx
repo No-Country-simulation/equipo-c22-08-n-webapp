@@ -8,6 +8,7 @@ import { Cat } from 'lucide-react';
 import whyAdopt from "@/assets/whyAdopt.avif";
 import ourMission from "@/assets/ourMission.jpg";
 import { useEffect, useState } from 'react';
+import ShelterEvents from "./ShelterEvents";
 
 export default function Index() {
   const [slides, setSlides] = useState([]);
@@ -37,11 +38,11 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen font-serif">
+    <div className="min-h-screen ">
       {/* <Header /> */}
       
       <main className="mx-auto px-4 sm:px-6 bg-primary lg:px-8 py-12 text-white-2">
-        <div className="bg-white rounded-lg  overflow-hidden mx-auto max-w-7xl">
+        <div className="rounded-lg  overflow-hidden mx-auto max-w-7xl">
           <div className="text-center flex flex-col items-center">
             <h1 className="text-4xl font-bold mb-4">Encuentra a tu amigo peludo perfecto</h1>
             <p className="text-xl mb-8"> Dale un hogar amoroso a una mascota necesitada</p>
@@ -94,6 +95,10 @@ export default function Index() {
             </>
           )}
         </div>
+      </section>
+
+      <section className="font-sans py-10 bg-beige-light">
+        <ShelterEvents onlySelect='true' />
       </section>
 
       {/* <Footer /> */}

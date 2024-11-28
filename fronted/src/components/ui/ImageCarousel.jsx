@@ -47,7 +47,8 @@ const ImageCarousel = ({ images }) => {
           <Image
             src={images[currentIndex].imagen}
             alt={`Imagen ${currentIndex + 1}`}
-            className="w-full h-96 lg:h-full object-cover "
+            setAnimation = {true}
+            className="w-full h-[450px] object-cover "
           />
         </motion.div>
       </AnimatePresence>

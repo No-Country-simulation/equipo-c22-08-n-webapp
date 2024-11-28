@@ -5,7 +5,6 @@ import { Stethoscope, CalendarHeart, Dna, HeartHandshake } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '@/components/ui/Button';
 import { removeHtmlTags } from '@/utils/helpers';
-
 export default function Pet({ animal }) {
   console.log('pet');
   console.log(animal);
@@ -62,13 +61,13 @@ export default function Pet({ animal }) {
               <InfoItem icon={<CalendarHeart />} label="Edad" value={removeHtmlTags(animal?.edad)} />
             </div>
 
-            {/* <Link to={`/login/${animal.id}`} className="block w-full font-serif font-extrabold"> */}
+            {/* <Link to={`/login/${animal.id}`} className="block w-full font-sans font-extrabold"> */}
               <Button
                 bgColor="orange"
                 hoverColor="orange-hover"
                 iconPosition="end"
                 onClick={()=>handleAdoptClick()}
-                className="mt-4 text-black block w-full font-serif font-extrabold pointer"
+                className="mt-4 text-black block w-full font-sans font-extrabold pointer"
               >
                 Adopta Ahora
                 <HeartHandshake />

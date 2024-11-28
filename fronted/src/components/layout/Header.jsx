@@ -5,14 +5,14 @@ const Header = () => (
   <header>
     <nav className="shadow-lg px-7  bg-primary py-4 text-wrap flex items-center text-beige text-lg ">
 
-        <div className="md:flex text-center justify-between items-center h-16 w-full">
+        <div className="md:flex text-center justify-between items-center h-24 w-full">
           <Link to="/" >
                 <div className="flex items-center justify-center space-x-2">
                 {/* Logo */}
                 <PawPrint className="h-8 w-8 text-beige" />
-                <span className="font-bold text-xl">PetPals</span>
+                <span className="font-bold text-xl">PatitasFelices</span>
 
-                {/* <li><Link href="/" className="hover:underline">PetPals</Link></li> */}
+                {/* <li><Link href="/" className="hover:underline">PatitasFelices</Link></li> */}
               </div>
             
             </Link>

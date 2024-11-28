@@ -1,26 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Github, Facebook, Twitter, HeartHandshake } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import Button  from '@/components/ui/button';
 import InputForm from '@/components/ui/InputForm';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useForm } from 'react-hook-form';
 
 
+
+
+  // email: z.string()
+  //  .email({ message: 'Ingrese un correo electrónico válido' })
+   
+  //   .min(1, { message: 'El email es requerido' }),
+  // password: z.string()
+
+  //   .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
+  //   .regex(/(?=.*[a-z])/, { message: 'Debe contener al menos una letra minúscula' })
+  //   .regex(/(?=.*[A-Z])/, { message: 'Debe contener al menos una letra mayúscula' })
+  //   .regex(/(?=.*[0-9])/, { message: 'Debe contener al menos un número' }),
 // Define validation schema
 const loginSchema = z.object({
-  email: z.string()
-   .email({ message: 'Ingrese un correo electrónico válido' })
-    .min(1, { message: 'El email es requerido' }),
+  username: z.string()
+    .min(1, { message: 'El nombre de usuario es requerido' }),
   password: z.string()
-    .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
-    .regex(/(?=.*[a-z])/, { message: 'Debe contener al menos una letra minúscula' })
-    .regex(/(?=.*[A-Z])/, { message: 'Debe contener al menos una letra mayúscula' })
-    .regex(/(?=.*[0-9])/, { message: 'Debe contener al menos un número' }),
+    .min(3, { message: 'La contraseña debe tener al menos 3 caracteres' })
+   
 });
 
 const Login = () => {
+   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,8 +47,34 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log('Form submitted:', data);
+
+    // Send data to API about POST TO VITE_API_URL_USERS
+    fetch(`${import.meta.env.VITE_API_URL_USERS}/user/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: data.username,
+        password: data.password,
+        expiresInMins: 60, 
+      }),
+      })
+       .then(res => res.json())
+        .then(data => {
+          if (data.accessToken){
+             toast.success('Credenciales Incorrectas'); 
+             navigate('/pet-profile'); 
+          }
+          else { toast.error('Credenciales incorrectas'); }
+        })
+        .catch(error => {
+          console.error(error);
+          toast.error('An error occurred. Please try again.');
+        });
+  
   };
      
+
+
 
   return (
         <div className="p-8 bg-white-2">
@@ -45,17 +83,27 @@ const Login = () => {
             <p className="text-gray-dark text-sm">
              Conecta con este gran mundo de las mascotas y hazlas felices 
             </p>
+            <ToastContainer />
           </div>
 
           <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
           
-              <InputForm
+              {/* <InputForm
                 type="email"
                 placeholder="Email Address"
                 icon={Mail}
                  error={errors.email?.message}
               {...register('email')}
+              onChange={(value) => handleInputChange('email', value)}
+                className="focus:ring-1 focus:ring-beige focus:border-beige"
+              /> */}
+              <InputForm
+                type="text"
+                placeholder="Nombre usuario"
+                icon={Mail}
+                 error={errors.username?.message}
+              {...register('username')}
               onChange={(value) => handleInputChange('email', value)}
                 className="focus:ring-1 focus:ring-beige focus:border-beige"
               />

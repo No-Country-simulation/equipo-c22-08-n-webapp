@@ -7,7 +7,7 @@ import Header from '@/components/layout/header';
 
 function Layout() {
   return (
-    <div className='flex flex-col justify-between max-h-full w-full ' >
+    <div className='flex flex-col justify-between max-h-full w-full font-sans' >
       <Header/>
         <Outlet/>
       <Footer/>

@@ -9,6 +9,9 @@ import LayoutLogin from '@/components/Layout/LayoutLogin';
 import RecoverPassword from '@/pages/RecoverPassword';
 
 import CreateAccountMultiSep from '@/pages/CreateAccountMultiSep';
+import SolicAdopt from '@/pages/SolicAdopt';
+import LayoutPets from '@/components/Layout/LayoutPets';
+import ShelterEvents from '@/pages/ShelterEvents';
 
 const Router = createBrowserRouter([
   {
@@ -62,6 +65,25 @@ const Router = createBrowserRouter([
       {
         index: true,
         element: <CreateAccountMultiSep />,
+      },
+    ],
+  },
+  {
+    path: '/pet-profile',
+    element: <LayoutPets />,
+    children: [
+      {
+        index: true,
+        element: <SolicAdopt />,
+      },
+    ],
+  },
+  {
+    path: '/events',
+    children: [
+      {
+        index: true,
+        element: <ShelterEvents />,
       },
     ],
   },

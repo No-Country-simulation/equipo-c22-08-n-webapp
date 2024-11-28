@@ -11,7 +11,7 @@ function LayoutLogin() {
         from-gray-100 to-white 
         flex items-center 
         justify-center
-        bg-gray">
+        bg-gray-dark">
 
       <div className="bg-white-2 rounded-2xl shadow-xl max-w-4xl grid md:grid-cols-2 overflow-hidden">
         <div
