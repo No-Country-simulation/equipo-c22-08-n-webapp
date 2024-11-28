@@ -1,6 +1,4 @@
-import { FindForm } from "./FindForm";
-
-export const Filter = ({ children,isMoreFilters=false,onSubmitHandlerForm }) => {
+export const Filter = ({ children,isMoreFilters=false }) => {
     return (
         <section className="mr-2 lg:1/4 xl:block mt-3 ps-4 sticky top-0 flex flex-col sm:flex sm:flex-row justify-center">        
             {isMoreFilters && children}

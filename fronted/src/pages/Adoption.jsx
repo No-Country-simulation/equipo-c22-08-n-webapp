@@ -6,7 +6,8 @@ import { useEffect, useRef, useState } from "react"
 import { Filter, FilterBy } from "../components/ui/Filter.jsx"
 import Button from "../components/ui/Button.jsx"
 import { Sliders, Stethoscope } from "lucide-react"
-import { FindForm } from "../components/ui/FindForm.jsx"
+import FindForm from "@/components/ui/FindForm.jsx"
+
 const tamano = ["Pequeño", "Mediano", "Grande"]
 const sexo = ["Hembra", "Macho"]
 
@@ -17,9 +18,8 @@ const Adoption = () => {
     const [filtered, setFiltered] = useState([]);
     const [selectedTamano, setSelectedTamano] = useState(null);
     const [selectedSexo, setSelectedSexo] = useState(null);
-    const [isMoreFilters, setMoreFilters] = useState(false);
-    const searchRef = useRef();
-    console.log(searchRef.current)
+    const [isMoreFilters, setIsMoreFilters] = useState(false);
+    const [query, setQuery] = useState("")
 
     //segundo useEffect, es necesario para poder setear el valor inicial de filtered(osea sin filtro)
     useEffect(() => {
@@ -56,16 +56,12 @@ const Adoption = () => {
         }
     };
 
-    const onSubmitSearchForm = (e) => {
-        e.preventdefault()
-    }
-    const onSubmitHandlerForm = (e) => {
-        e.preventdefault()
-    }
-
     const handleIsMoreFilters = () => {
-        setMoreFilters(prev => !prev)
-    }
+        setIsMoreFilters(state =>!state);
+    };
+
+    
+ 
 
     return (
         <>
@@ -102,7 +98,7 @@ const Adoption = () => {
                                     <Sliders />
                                 </button>
                             </div>
-                            <Filter onSubmitHandlerForm={onSubmitHandlerForm} isMoreFilters={isMoreFilters}>
+                            <Filter isMoreFilters={isMoreFilters}>
                                 <FilterBy
                                     title="Tamaño"
                                     options={tamano}
@@ -117,7 +113,7 @@ const Adoption = () => {
                                     setSelectedOption={setSelectedSexo}
                                 />
                             </Filter>
-                            <FindForm onSubmitSearchForm={onSubmitSearchForm} searchRef={searchRef}/>
+                          
                         </article>
                         <article>
                             <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4" >
@@ -136,7 +132,7 @@ const Adoption = () => {
                                         vacunas={e?.vacunas}
                                         sexo={e?.genero}
                                     >
-                                       l
+                                        l
                                     </Card >
 
                                 ))}
