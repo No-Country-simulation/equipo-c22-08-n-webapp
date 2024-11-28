@@ -71,9 +71,8 @@ const Card = ({ image, id, redirect = false, title, description, phaseMotivation
             ease-in-out ${isHovered && selectedCard ? 'scale-105' : ''}`}
             />
           </div>
-        )}
-      
-        {children && (
+        )}      
+        {/* {children && (
         <div
           onClick={(e) => {
           e.preventDefault();
@@ -91,7 +90,7 @@ const Card = ({ image, id, redirect = false, title, description, phaseMotivation
           <HeartHandshake/>
           </Button>
         </div>
-        )}
+        )} */}
         <div className={`px-5 py-7 flex flex-col justify-between  h-${heightNoImage}`}>
           <h2 className="text-2xl font-bold mb-2 text-center text-white-2 ">{removeHtmlTags(title)}</h2>
 
