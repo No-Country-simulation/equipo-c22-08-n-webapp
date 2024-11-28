@@ -93,10 +93,7 @@ Este proyecto está organizado de la siguiente manera:
     ├── README.md
     ├── tailwind.config.js
     └── vite.config.js
-markdown
-Copiar código
-
-
+```
 
 
 
