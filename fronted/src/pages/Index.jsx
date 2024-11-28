@@ -9,10 +9,12 @@ import whyAdopt from "@/assets/whyAdopt.avif";
 import ourMission from "@/assets/ourMission.jpg";
 import { useEffect, useState } from 'react';
 import ShelterEvents from "./ShelterEvents";
+import { useNavigate } from "react-router-dom";
 
 export default function Index() {
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true); // Estado de carga
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('https://huachitos.cl/api/animales')
@@ -37,6 +39,10 @@ export default function Index() {
       });
   }, []);
 
+  const handleAdoptClick = () => {
+    navigate('/adoption');
+  };
+
   return (
     <div className="min-h-screen ">
       {/* <Header /> */}
@@ -46,11 +52,12 @@ export default function Index() {
           <div className="text-center flex flex-col items-center">
             <h1 className="text-4xl font-bold mb-4">Encuentra a tu amigo peludo perfecto</h1>
             <p className="text-xl mb-8"> Dale un hogar amoroso a una mascota necesitada</p>
+            
             <Button
               bgColor="secondary"
               hoverColor="green-lila"
 
-              onClick={() => console.log('Adopting started!')}
+              onClick={() => navigate('/adoption')}
             >
               Adopta
               <Cat className="mr-1" />
