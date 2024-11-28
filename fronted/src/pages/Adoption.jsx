@@ -7,6 +7,7 @@ import { Filter, FilterBy } from "../components/ui/Filter.jsx"
 import Button from "../components/ui/Button.jsx"
 import { Sliders, Stethoscope } from "lucide-react"
 import FindForm from "@/components/ui/FindForm.jsx"
+import { Link } from "react-router-dom"
 
 const tamano = ["Pequeño", "Mediano", "Grande"]
 const sexo = ["Hembra", "Macho"]
@@ -38,27 +39,27 @@ const Adoption = () => {
 
     const handleCatDogButton = (tipo) => {
         if (tipo === 'cat') {
-            
+
             setIsActiveCat(prev => !prev);
             console.log("isActiveCat: ", isActiveCat)
             if (isActiveCat) {
                 setIsActiveDog(false)
                 // applyFilters()
-            } else{
+            } else {
                 // applyFilters()
-            }           
+            }
 
         }
         if (tipo === 'dog') {
             setIsActiveDog(prev => !prev);
-            console.log("isActiveDog: ", isActiveDog)   
-            if( isActiveDog){
+            console.log("isActiveDog: ", isActiveDog)
+            if (isActiveDog) {
                 setIsActiveCat(false)
                 // applyFilters()
-            } else{
+            } else {
                 // applyFilters()
             }
-            
+
         }
     }
     const handleIsMoreFilters = () => {
@@ -156,23 +157,24 @@ const Adoption = () => {
                         <article>
                             <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4" >
                                 {filteredPets && filteredPets.map((e) => (
-                                    <Card
-                                        key={e?.id}
-                                        id={e?.id}
-                                        image={e?.imagen}
-                                        selectedCard={false}
-                                        setAnimation={true}
-                                        title={e?.nombre}
-                                        edad={e?.edad}
-                                        className="bg-beige min-h-28 text-secondary"
-                                        sectionDetails={true}
-                                        description={""}
-                                        vacunas={e?.vacunas}
-                                        sexo={e?.genero}
-                                    >
-                                        l
-                                    </Card >
-
+                                    <Link to={`/pet/${e?.id}`} key={e?.id}>
+                                        <Card
+                                            key={e?.id}
+                                            id={e?.id}
+                                            image={e?.imagen}
+                                            selectedCard={false}
+                                            setAnimation={true}
+                                            title={e?.nombre}
+                                            edad={e?.edad}
+                                            className="bg-beige min-h-28 text-secondary"
+                                            sectionDetails={true}
+                                            description={""}
+                                            vacunas={e?.vacunas}
+                                            sexo={e?.genero}
+                                        >
+                                            c
+                                        </Card >
+                                    </Link>
                                 ))}
                                 {/* {filteredPets && filteredPets.map((e) => (
                                     <Card
