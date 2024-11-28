@@ -1,97 +1,148 @@
-import Header from "../components/layout/Header"
-import Footer from "../components/layout/Footer"
-// import { useContext, useEffect, useState } from "react"
-// import Image from "../components/ui/Image"
 import { useFetch } from "../hooks/useFetch"
 import Card from "../components/ui/Card.jsx"
-// import { useContext } from "react"
 import DogIconButton from "../components/ui/DogIconButton.jsx"
 import CatIconButton from "../components/ui/CatIconButton.jsx"
-import { CirclePlus, Stethoscope } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Filter, FilterBy } from "../components/ui/Filter.jsx"
-//  import { Context } from "../store/appContext"
-const tamano= ["Pequeño", "Mediano", "Grande"]
+import Button from "../components/ui/Button.jsx"
+import { Sliders, Stethoscope } from "lucide-react"
+import FindForm from "@/components/ui/FindForm.jsx"
+
+const tamano = ["Pequeño", "Mediano", "Grande"]
 const sexo = ["Hembra", "Macho"]
 
-
-
-export const Adoption = () => {
-    // const {store,actions} = useContext(Context);
+const Adoption = () => {
     const { data: pets, loading, error } = useFetch("https://huachitos.cl/api/animales");
-    const [isActive, setIsActive] = useState(false);
-    const [isActiveDog,setIsActiveDog] = useState(false);
+    const [isActiveDog, setIsActiveDog] = useState(false);
+    const [isActiveCat, setIsActiveCat] = useState(false);
+    const [filtered, setFiltered] = useState([]);
+    const [selectedTamano, setSelectedTamano] = useState(null);
+    const [selectedSexo, setSelectedSexo] = useState(null);
+    const [isMoreFilters, setIsMoreFilters] = useState(false);
+    const [query, setQuery] = useState("")
 
-    const handlePetButton = () => {
-        setIsActive(!isActive);
+    //segundo useEffect, es necesario para poder setear el valor inicial de filtered(osea sin filtro)
+    useEffect(() => {
+        if (pets?.data) {
+            setFiltered(pets.data);
+        }
+    }, [pets]);
+
+    const handleCatButton = () => {
+        //cuando filtro tipo gato esta con valor true
+        if (isActiveCat) {
+            setIsActiveCat(false);
+            setFiltered(pets?.data);
+        } else {
+            //cuando tiene valor false
+            setIsActiveCat(true);
+            setIsActiveDog(false);
+            const gatos = pets?.data.filter(pet => pet.tipo.toLowerCase().includes("gato"));
+            setFiltered(gatos);
+        }
     };
 
-    // const [selected, setSelected] = useState(false);
+    const handleDogButton = () => {
+        //cuando filtro tipo perro esta true
+        if (isActiveDog) {
+            setIsActiveDog(false);
+            setFiltered(pets?.data);
+        } else {
+            //cuando filtro tipo gato esta false
+            setIsActiveDog(true);
+            setIsActiveCat(false);
+            const perros = pets?.data.filter(pet => pet.tipo.toLowerCase().includes("perro"));
+            setFiltered(perros);
+        }
+    };
 
-    // const selectHandler = (value)=>{
-    //     setSelected(prev=>prev===value ? '')
-    // }
+    const handleIsMoreFilters = () => {
+        setIsMoreFilters(state =>!state);
+    };
 
-    console.log(pets?.data)
+    
+ 
 
-
-    return <>
-        <main className="h-full bg-secondary min-w-52">
-            <div className="flex flex-row justify-center px-6 py-8">
-                <section className="mr-2 lg:1/4 hidden xl:block mt-20 ps-4">
-                <h2>Filtrar por:</h2>
-                    <Filter>
-                        <FilterBy title="Tamaño" type={tamano}/>
-                        <FilterBy title="Sexo" type={sexo}/>
-                    </Filter>
-                </section>
-                <section className="w-full lg:3/4">
-                    <article>
-                        <div className="h-20 flex justify-center" onClick={() => { }}>
-                            <button
-                                onClick={handlePetButton}
-                                className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none"
-                                aria-label="Dog Icon Button"
-                                aria-pressed={isActive}
-                            >
-                                <DogIconButton isActive={isActive} />
-                            </button>
-                            <button
-                                onClick={handlePetButton}
-                                className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none"
-                                aria-label="Cat Icon Button"
-                                aria-pressed={isActive}
-                            >
-                                <CatIconButton isActive={isActive} />
-                            </button>
-                        </div>
-                        <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4">
-                            {pets?.data && pets?.data.map(e => (
-                                // <div className="w-full h-64 overflow-hidden">
-                                //     {/* <Image
-                                //         src={e.imagen}
-                                //         alt="imagen de mascota"
-                                //         objectFit="scale-down"
-                                //     /> */}
-                                //     <img src={e?.imagen} alt="" />
-                                // </div>
-                                <Card
-                                    image={e?.imagen}
-                                    selectedCard={false}
-                                    setAnimation={true}
-                                    heightNoImage="40"
-                                    title={e?.nombre}
-                                    edad={e?.edad}
-                                    className="bg-beige min-h-28 text-secondary"
-                                    sectionDetails={true}
-                                    vacunas={e?.vacunas}
+    return (
+        <>
+            <main className="h-full bg-secondary min-w-52">
+                <div className="flex flex-row justify-center px-6 py-8">
+                    <section className="w-full lg:3/4">
+                        <article>
+                            <div className="h-20 flex justify-center">
+                                <button
+                                    onClick={handleDogButton}
+                                    className={`p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none ${isActiveDog ? "bg-gray-300" : ""
+                                        }`}
+                                    aria-label="Dog Icon Button"
+                                    aria-pressed={isActiveDog}
+                                >
+                                    <DogIconButton isActive={isActiveDog} />
+                                </button>
+                                <button
+                                    onClick={handleCatButton}
+                                    className={`p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none ${isActiveCat ? "bg-gray-300" : ""
+                                        }`}
+                                    aria-label="Cat Icon Button"
+                                    aria-pressed={isActiveCat}
+                                >
+                                    <CatIconButton isActive={isActiveCat} />
+                                </button>
+                                <button
+                                    onClick={handleIsMoreFilters}
+                                    className={`p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none ${isMoreFilters ? "bg-gray-300" : ""
+                                        }`}
+                                    aria-label="Dog Icon Button"
+                                    aria-pressed={isMoreFilters}
+                                >
+                                    <Sliders />
+                                </button>
+                            </div>
+                            <Filter isMoreFilters={isMoreFilters}>
+                                <FilterBy
+                                    title="Tamaño"
+                                    options={tamano}
+                                    selectedOption={selectedTamano}
+                                    setSelectedOption={setSelectedTamano}
                                 />
-                            ))}
-                        </div>
-                    </article>
-                </section>
-            </div>
 
-        </main>
-    </>
-}
+                                <FilterBy
+                                    title="Sexo"
+                                    options={sexo}
+                                    selectedOption={selectedSexo}
+                                    setSelectedOption={setSelectedSexo}
+                                />
+                            </Filter>
+                          
+                        </article>
+                        <article>
+                            <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4" >
+                                {filtered && filtered.map((e) => (
+                                    <Card
+                                        key={e?.id}
+                                        id={e?.id}
+                                        image={e?.imagen}
+                                        selectedCard={false}
+                                        setAnimation={true}
+                                        title={e?.nombre}
+                                        edad={e?.edad}
+                                        className="bg-beige min-h-28 text-secondary"
+                                        sectionDetails={true}
+                                        description={""}
+                                        vacunas={e?.vacunas}
+                                        sexo={e?.genero}
+                                    >
+                                        l
+                                    </Card >
+
+                                ))}
+                            </div >
+                        </article>
+                    </section>
+                </div>
+            </main>
+        </>
+    );
+};
+
+export default Adoption
