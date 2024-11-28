@@ -9,6 +9,7 @@ import LayoutLogin from '@/components/Layout/LayoutLogin';
 import RecoverPassword from '@/pages/RecoverPassword';
 
 import CreateAccountMultiSep from '@/pages/CreateAccountMultiSep';
+import  Adoption  from '@/pages/Adoption';
 
 const Router = createBrowserRouter([
   {
@@ -65,6 +66,18 @@ const Router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:'/adoption',
+    element:<Layout/>,
+    children:[
+      {
+        index:true,
+        element:<Adoption/>,      
+      }
+  
+      
+    ]
+  }
 ]);
 
 export { Router };
