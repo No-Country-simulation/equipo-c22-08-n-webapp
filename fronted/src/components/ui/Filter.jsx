@@ -15,7 +15,7 @@ export const FilterBy = ({ title, options, selectedOption, setSelectedOption }) 
                     <label key={index} className="flex items-center gap-2 cursor-pointer">                       
                         <input
                             type="radio"
-                            name={title} // Este atributo agrupa los radios dentro de cada filtro
+                            name={title} 
                             value={option}
                             checked={selectedOption === option}
                             onChange={() => setSelectedOption(option)}

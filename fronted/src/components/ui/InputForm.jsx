@@ -32,7 +32,7 @@ const InputForm = forwardRef(({
             placeholder={placeholder}
             onChange={(e) => {
               onChange?.(e.target.value);
-              props.onChangeNative?.(e);
+              props.onChangeNative?.(e.target.value);
             }}
             ref={ref}
             className={`
@@ -48,10 +48,12 @@ const InputForm = forwardRef(({
           <input
             type={type}
             placeholder={placeholder}
-            onChange={(e) => {
-              onChange?.(e.target.value);
-              props.onChangeNative?.(e);
-            }}
+            // onChange={(e) => {
+            //   onChange?.(e.target.value);
+            //   props.onChangeNative?.(e);
+            // }}
+
+            onChange={(e) => onChange(e)}
             ref={ref}
             className={`
               w-full pl-12 pr-4 py-3 border rounded-lg

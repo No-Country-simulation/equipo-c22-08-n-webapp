@@ -31,6 +31,10 @@ const schemaStep3 = zod.object({
   }),
 });
 
+const onChange = (e) => {
+  console.log('fff', e);
+}
+
 const getResolver = (step) => {
   if (step === 1) return zodResolver(schemaStep1);
   if (step === 2) return zodResolver(schemaStep2);
@@ -50,6 +54,7 @@ const Step1 = () => {
         placeholder="Alejandro, Maria, etc."
         error={errors.nombre?.message}
         {...register('nombre')}
+          onchange={e => onChange(this)}  
       />
       <InputForm
         label="Apellido"

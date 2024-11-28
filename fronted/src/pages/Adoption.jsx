@@ -1,18 +1,20 @@
 import { useFetch } from "../hooks/useFetch"
-import Card from "../components/ui/Card.jsx"
-import DogIconButton from "../components/ui/DogIconButton.jsx"
-import CatIconButton from "../components/ui/CatIconButton.jsx"
+import Card from "../components/ui/Card"
+import DogIconButton from "../components/ui/DogIconButton"
+import CatIconButton from "../components/ui/CatIconButton"
 import { useEffect, useRef, useState } from "react"
-import { Filter, FilterBy } from "../components/ui/Filter.jsx"
-import Button from "../components/ui/Button.jsx"
+import { Filter, FilterBy } from "../components/ui/Filter"
+import Button from "../components/ui/Button"
 import { Sliders, Stethoscope } from "lucide-react"
-import FindForm from "@/components/ui/FindForm.jsx"
+import FindForm from "@/components/ui/FindForm"
 
 const tamano = ["Pequeño", "Mediano", "Grande"]
 const sexo = ["Hembra", "Macho"]
 
 const Adoption = () => {
-    const { data: pets, loading, error } = useFetch("https://huachitos.cl/api/animales");
+
+    const { data: pets, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/animales`);
+    // const { data: pets, loading, error } = useFetch("https://huachitos.cl/api/animales");
     const [isActiveDog, setIsActiveDog] = useState(false);
     const [isActiveCat, setIsActiveCat] = useState(false);
     const [filtered, setFiltered] = useState([]);
@@ -60,12 +62,23 @@ const Adoption = () => {
         setIsMoreFilters(state =>!state);
     };
 
+    const rep = (e) => {
+        setQuery(e.target.value)
+        const result = pets?.data.filter(pet => pet.nombre.toLowerCase().includes(e.target.value.toLowerCase()));
+        setFiltered(result);
+    }
+
+
     
  
 
     return (
         <>
+
+
             <main className="h-full bg-secondary min-w-52">
+
+                 
                 <div className="flex flex-row justify-center px-6 py-8">
                     <section className="w-full lg:3/4">
                         <article>
@@ -98,7 +111,7 @@ const Adoption = () => {
                                     <Sliders />
                                 </button>
                             </div>
-                            <Filter isMoreFilters={isMoreFilters}>
+                             <Filter isMoreFilters={isMoreFilters}>
                                 <FilterBy
                                     title="Tamaño"
                                     options={tamano}
@@ -111,8 +124,12 @@ const Adoption = () => {
                                     options={sexo}
                                     selectedOption={selectedSexo}
                                     setSelectedOption={setSelectedSexo}
-                                />
-                            </Filter>
+                                /> 
+                                 </Filter>
+
+                          
+
+                              
                           
                         </article>
                         <article>
