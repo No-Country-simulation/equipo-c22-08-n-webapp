@@ -1,6 +1,16 @@
 # equipo-c22-08-n-webapp
 
+## Titulo Proyecto
+## Tecnologias
+## Descripcion, target
+## Estado
+## Versiones   (badges)
+## Capturas de la funcionalidad  /// dependiendo del publico objetivo 
+## Como instalar / flujo de proyecto
+## Licencias (opcional)
+
 ## Estructura del Proyecto
+
 
 
 
