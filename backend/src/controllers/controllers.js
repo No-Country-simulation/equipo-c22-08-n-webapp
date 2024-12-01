@@ -1,13 +1,13 @@
 import { User } from "../models/user.js";
 
 export const register = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, nombre, rol = "usuario", tipo = "normal" } = req.body;
 
     try {
         let user = await User.findOne({ email });
         if (user) throw { code: 11000 };
 
-        user = new User({ email, password });
+        user = new User({ email, password, nombre, rol, tipo });
         await user.save();
 
         return res.status(201).json({ message: "Usuario registrado exitosamente" });
@@ -20,6 +20,7 @@ export const register = async (req, res) => {
         return res.status(500).json({ error: "Error de servidor" });
     }
 };
+
 
 export const login = async (req, res) => {
     try {

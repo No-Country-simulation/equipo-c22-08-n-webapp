@@ -15,11 +15,8 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     id: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: true,
-        lowercase: true,
+        type: mongoose.Schema.Types.ObjectId,
+        default: new mongoose.Types.ObjectId(),
     },
     nombre: {
         type: String,
@@ -32,7 +29,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true,
         lowercase: true,
     },
     tipo: {
@@ -40,7 +36,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
         lowercase: true,
-        enum: ["Normal", "Administrador"],
+        enum: ["normal", "administrador"],
     },
 });
 
