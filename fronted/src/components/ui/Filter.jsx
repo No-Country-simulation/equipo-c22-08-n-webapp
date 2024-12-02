@@ -1,28 +1,34 @@
-export const Filter = ({ children,isMoreFilters=false }) => {
+import { useEffect } from "react";
+
+export const Filter = ({ children, isMoreFilters = false }) => {
     return (
-        <section className="mr-2 lg:1/4 xl:block mt-3 ps-4 sticky top-0 flex flex-col sm:flex sm:flex-row justify-center">        
-            {isMoreFilters && children}
-        </section>
+       <>
+       {isMoreFilters && children}
+       
+       </>
+        
     );
 };
 
-export const FilterBy = ({ title, options, selectedOption, setSelectedOption }) => {
+export const FilterBy = ({ title, options, handleSelectedOption }) => {
+    
     return (
         <div className="flex flex-col justify-evenly border-t py-4 mx-3">
             <h3 className="font-medium text-lg mb-2">{title}</h3>
-            <div className="flex gap-2">
+            <div className="flex gap-2" onChange={handleSelectedOption}>
                 {options.map((option, index) => (
-                    <label key={index} className="flex items-center gap-2 cursor-pointer">                       
+
+                    <label key={index} className="flex items-center gap-2 cursor-pointer">
                         <input
                             type="radio"
                             name={title} 
-                            value={option}
-                            checked={selectedOption === option}
-                            onChange={() => setSelectedOption(option)}
+                            value={option}                            
                             className="form-radio text-blue-500 focus:ring focus:ring-blue-200"
+                            
                         />
                         <span>{option}</span>
                     </label>
+
                 ))}
             </div>
         </div>
