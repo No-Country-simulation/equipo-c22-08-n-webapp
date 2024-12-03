@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+
 //Para recibir data de un API
 export const useFetch = (url)=> {
     const [data,setData] = useState(null);
@@ -11,6 +12,7 @@ export const useFetch = (url)=> {
         const controller = new AbortController();
         setLoading(true)
         const fetchData = async()=>{
+            console.log(`url es`,url)
             try {
                 const response = await fetch(url,controller);
                 if(!response.ok){
@@ -18,7 +20,7 @@ export const useFetch = (url)=> {
                 }
                 const jsonData = await response.json();
                 setData(jsonData)
-                setError(null)
+                setError(null)               
             } catch (error) {
                 setError(error)
             } finally{
