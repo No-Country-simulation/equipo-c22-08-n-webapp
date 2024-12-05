@@ -7,10 +7,11 @@ import { Filter, FilterBy } from "../components/ui/Filter.jsx"
 import { Sliders } from "lucide-react"
 import { Link } from "react-router-dom"
 import { ToastContainer } from 'react-toastify';
+import Female from "@/assets/female.png"
+import Male from "@/assets/male.png"
 import 'react-toastify/dist/ReactToastify.css';
 
-const tamano = ["Pequeño", "Mediano", "Grande"]
-const sexo = ["Hembra", "Macho"]
+const sexo = [{type:"Macho",image:Male,alt:"An image of male gender"},{type:"Hembra",image:Female,alt:"An image of female gender"}] 
 
 const Adoption = () => {
     const { data: pets, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/animales`);
@@ -61,7 +62,7 @@ const Adoption = () => {
 
 
 
-   
+
     const handleTamano = (e) => {
         setTamanoOption(e.target.value)
     }
@@ -165,12 +166,13 @@ const Adoption = () => {
 
             <main className="h-full bg-secondary min-w-52">
 
-                 
+
                 <div className="flex flex-row justify-center px-6 py-8">
                     <ToastContainer />
                     <section className="w-full lg:3/4">
                         <article>
-                            <div className="h-20 flex justify-center">
+                            <h2 className="text-center text-green-lila font-bold font-serif text-2xl">ENCONTRAR PATITAS POR:</h2>
+                            <div className="h-22 flex justify-center align-center">
                                 <button
                                     onClick={() => handleCatDogButton('dog')}
                                     className={`p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none ${isActiveDog ? "bg-gray-300" : ""}`}
@@ -180,35 +182,27 @@ const Adoption = () => {
 
                                     <DogIconButton isActive={isActiveDog} />
                                 </button>
-                                <div>
-                                    <button
-                                        onClick={() => handleCatDogButton('cat')}
-                                        className={`p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none ${isActiveCat ? "bg-gray-300" : ""}`}
-                                        aria-label="Cat Icon Button"
-                                        aria-pressed={isActiveCat}
-                                    >
-                                        <CatIconButton isActive={isActiveCat} />
-                                    </button>
-                                </div>
+
+                                <button
+                                    onClick={() => handleCatDogButton('cat')}
+                                    className={`p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none ${isActiveCat ? "bg-gray-300" : ""}`}
+                                    aria-label="Cat Icon Button"
+                                    aria-pressed={isActiveCat}
+                                >
+                                    <CatIconButton isActive={isActiveCat} />
+                                </button>
+
                                 <button
                                     onClick={handleIsMoreFilters}
                                     className={`p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 focus:outline-none ${isMoreFilters ? "bg-gray-300 scale-150" : ""}`}
                                     aria-label="Filters Button"
                                     aria-pressed={isMoreFilters}
                                 >
-                                    <Sliders />
+                                    <Sliders size={52} color={"#D3A87C"} />
                                 </button>
                             </div>
                         </article>
                         <section className="mr-2 lg:1/4 xl:block mt-3 ps-4 sticky top-0 flex flex-col sm:flex sm:flex-row justify-center">
-                            <Filter isMoreFilters={isMoreFilters}>
-                                <FilterBy
-                                    title="Tamaño"
-                                    options={tamano}
-                                    handleSelectedOption={handleTamano}
-                                />
-                            </Filter>
-
                             <Filter isMoreFilters={isMoreFilters}>
                                 <FilterBy
                                     title="Sexo"
@@ -218,7 +212,7 @@ const Adoption = () => {
                             </Filter>
                         </section>
                         <article className="mt-5">
-                            <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4 mt-10">
                                 {currentPets.map((e) => (
                                     <Link to={`/pet/${e?.id}`} key={e?.id}>
                                         <Card
