@@ -214,7 +214,7 @@ const Adoption = () => {
                         <article className="mt-5">
                             <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4 mt-10">
                                 {currentPets.map((e) => (
-                                    <Link to={`/pet/${e?.id}`} key={e?.id}>
+                                    <Link to={`/adopt/${e?.id}`} key={e?.id}>
                                         <Card
                                             key={e?.id}
                                             id={e?.id}
@@ -228,6 +228,7 @@ const Adoption = () => {
                                             description={""}
                                             vacunas={e?.vacunas}
                                             sexo={e?.genero}
+                                            redirect={true}
                                         >
                                             c
                                         </Card>
