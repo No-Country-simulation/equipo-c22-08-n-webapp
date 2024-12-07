@@ -42,13 +42,13 @@ const Login = () => {
   });
 
   const handleInputChange = (name, value) => {
-    setValue(name, value, { shouldValidate: true });
+      // setValue(name, value, { shouldValidate: true });
   };
 
   const onSubmit = (data) => {
     console.log('Form submitted:', data);
 
-    // Send data to API about POST TO VITE_API_URL_USERS
+    // Send da
     fetch(`${import.meta.env.VITE_API_URL_USERS}/user/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -114,7 +114,7 @@ const Login = () => {
                 icon={Lock}
               error={errors.password?.message}
               {...register('password')}
-              onChange={(value) => handleInputChange('password', value)}
+              onChange={(event) => handleInputChange('password', event)}
                 className="focus:ring-1 focus:ring-beige focus:border-beige"
               />
 

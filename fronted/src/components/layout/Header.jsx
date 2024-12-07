@@ -20,7 +20,7 @@ const Header = () => (
           
           <div className="flex justify-center items-center space-x-4">
             <Link
-              to="/adopt"
+              to="/adoption"
               className=" hover:text-green-lila px-3 py-2 rounded-md  font-medium"
             >
               <Home className="inline-block mr-1" size={18} />
