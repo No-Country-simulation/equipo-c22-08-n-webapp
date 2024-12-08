@@ -1,20 +1,15 @@
+import "dotenv/config";
 import express from "express";
-import dotenv from "dotenv";
-import { connectDB } from "./config/db.js";
-import router from "./routes/router.js";
+import cors from "cors";
+import { router } from "./routes/index.js";
+import dbConnect from "./config/db.js";
 
-dotenv.config();
-
+const PORT = process.env.PORT || 3001;
 const app = express();
 
-const PORT = process.env.PORT || 5000;
-
-connectDB();
-
+app.use(cors());
 app.use(express.json());
+app.use(router);
 
-app.use("/api", router);
-
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+dbConnect().then(() => console.log("Conexión lista"));
+app.listen(PORT, () => console.log(`Servidor en el puerto ${PORT}`));
