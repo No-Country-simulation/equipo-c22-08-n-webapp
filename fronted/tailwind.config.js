@@ -42,5 +42,23 @@ export default {
       }
     }
   }, 
-  plugins: [], 
+  plugins: [
+     function ({ addComponents }) {
+      addComponents({
+        '.custom-scrollbar': {
+          '&::-webkit-scrollbar': {
+            width: '0.5rem', 
+          },
+          '&::-webkit-scrollbar-track': {
+            borderRadius: '9999px', 
+            backgroundColor: '#f3f4f6', 
+          },
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '9999px', 
+            backgroundColor: '#FFA07A', 
+          },
+        },
+      });
+    },
+  ], 
 }

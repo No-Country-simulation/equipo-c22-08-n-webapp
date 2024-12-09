@@ -31,13 +31,13 @@ const Adoption = () => {
             setFilteredPets(pets?.data)
             setInitialData(pets?.data)
         }
-    }, [pets?.data]);
+    }, []);
     //revisar cualquier cambio por cualquier filtro aplicado
-    useEffect(() => {
-        console.log("sexo:", sexOption, "tamano:", tamanoOption)
-        console.log("gato:", isActiveCat, "perro:", isActiveDog)
-        applyFilters()
-    }, [isActiveDog, isActiveCat, sexOption, tamanoOption]);
+    // useEffect(() => {
+    //     console.log("sexo:", sexOption, "tamano:", tamanoOption)
+    //     console.log("gato:", isActiveCat, "perro:", isActiveDog)
+    //     applyFilters()
+    // }, [isActiveDog, isActiveCat, sexOption, tamanoOption, applyFilters]);
 
     const handleCatDogButton = (tipo) => {
         if (tipo === 'cat') {
@@ -71,17 +71,6 @@ const Adoption = () => {
         }
     };
 
-<<<<<<< HEAD
-    const rep = (e) => {
-        setQuery(e.target.value)
-        const result = pets?.data.filter(pet => pet.nombre.toLowerCase().includes(e.target.value.toLowerCase()));
-        setFiltered(result);
-    }
-
-
-    
- 
-=======
     const handleTamano = (e) => {
         console.log("sex option es: ", sexOption)
         setTamanoOption(e.target.value)
@@ -109,7 +98,6 @@ const Adoption = () => {
         console.log("filteredPets is:", filteredPets)
         setFilteredPets(filteredPets);
     }
->>>>>>> 75f7e8c0c1726adc30b8ebb15664ff3e51546ee0
 
     return (
         <>
@@ -150,28 +138,6 @@ const Adoption = () => {
                                     <Sliders />
                                 </button>
                             </div>
-<<<<<<< HEAD
-                             <Filter isMoreFilters={isMoreFilters}>
-                                <FilterBy
-                                    title="Tamaño"
-                                    options={tamano}
-                                    selectedOption={selectedTamano}
-                                    setSelectedOption={setSelectedTamano}
-                                />
-
-                                <FilterBy
-                                    title="Sexo"
-                                    options={sexo}
-                                    selectedOption={selectedSexo}
-                                    setSelectedOption={setSelectedSexo}
-                                /> 
-                                 </Filter>
-
-                          
-
-                              
-                          
-=======
                             <section className="mr-2 lg:1/4 xl:block mt-3 ps-4 sticky top-0 flex flex-col sm:flex sm:flex-row justify-center">
 
                                 <Filter isMoreFilters={isMoreFilters}>
@@ -193,7 +159,6 @@ const Adoption = () => {
                             </section>
 
 
->>>>>>> 75f7e8c0c1726adc30b8ebb15664ff3e51546ee0
                         </article>
                         <article>
                             <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4" >

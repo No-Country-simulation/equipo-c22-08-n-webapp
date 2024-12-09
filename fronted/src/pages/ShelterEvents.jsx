@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import Modal from 'react-modal';
@@ -6,22 +6,24 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import 'moment/locale/es'
+import 'moment/locale/es';
 import Button from '@/components/ui/Button';
 import InputForm from '@/components/ui/InputForm';
+import { Plus, Trash2, Download } from 'lucide-react';
+import ListEvents from '@/components/ui/ListEvents'; 
 
-import { Plus, Trash2 } from 'lucide-react';
 
 moment.locale('es');
 const localizer = momentLocalizer(moment);
 
+// Los eventos iniciales
 const initialEvents = [
   {
     id: 1,
     titulo: 'Día de Adopción de Perros Mayores',
-    inicio: new Date(2024, 5, 15, 10, 0), // fecha y hora
+    inicio: new Date(2024, 5, 15, 10, 0),
     fin: new Date(2024, 5, 15, 12, 0),
-    descripcion: 'Ven y adopta a un perro mayor. ¡Ellos también necesitan un hogar! d ansduas asdiasduhasbdasd asuidabsduabsdauDNDNSJF SDF IS DFSDF SDFSDIF DSF SDUF',
+    descripcion: 'Ven y adopta a un perro mayor. ¡Ellos también necesitan un hogar!',
     categoria: 'Adopción'
   },
   {
@@ -40,20 +42,26 @@ const initialEvents = [
     descripcion: 'Aprende a cuidar mejor a tus mascotas con nuestros expertos.',
     categoria: 'Concientización'
   },
-  {
-    id: 4,
-    titulo: 'Charla de Cuidado de Mascotas',
-    inicio: new Date(2024, 5, 30, 14, 0),
-    fin: new Date(2024, 5, 30, 16, 0),
-    descripcion: 'Aprende a cuidar mejor a tus mascotas con nuestros expertos.',
-    categoria: 'Concientización'
-  },
 ];
 
 Modal.setAppElement('#root');
 
 const ShelterEvents = ({ onlySelect = false }) => {
-  const [events, setEvents] = useState(initialEvents);
+  const [events, setEvents] = useState([]);
+
+  // Cargar eventos desde localStorage o usar eventos iniciales
+  useEffect(() => {
+    const storedEvents = localStorage.getItem('eventsLocalesPets');
+    if (storedEvents) {
+      setEvents(JSON.parse(storedEvents)); // Si existen en localStorage, usarlos
+    } else {
+      // Si no existen, guardar los eventos iniciales
+      localStorage.setItem('eventsLocalesPets', JSON.stringify(initialEvents));
+      setEvents(initialEvents);
+    }
+  }, []);
+  
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isAddingEvent, setIsAddingEvent] = useState(false);
@@ -62,6 +70,7 @@ const ShelterEvents = ({ onlySelect = false }) => {
     inicio: '',
     fin: '',
     descripcion: '',
+    categoria: 'Adopción',
   });
 
   const openModal = (event) => {
@@ -75,38 +84,59 @@ const ShelterEvents = ({ onlySelect = false }) => {
     setIsAddingEvent(false);
   };
 
-  const handleSelectSlot = ({ titulo, inicio, fin, descripcion, categoria }) => {
+  const handleSelectSlot = ({ start, end }) => {
     if (onlySelect) return;
-    setNewEvent({ titulo, inicio, fin, descripcion, categoria });
+    setNewEvent({ ...newEvent, inicio: start, fin: end });
     setIsAddingEvent(true);
     setModalIsOpen(true);
   };
 
   const handleAddEvent = () => {
-    setEvents([...events, newEvent]);
+    console.log(newEvent)
+    if (!newEvent.titulo || !newEvent.descripcion || !newEvent.inicio || !newEvent.fin) {
+      toast.error('Por favor complete todos los campos obligatorios');
+      return;
+    }
+
+    const newEventWithId = { ...newEvent, id: events.length + 1 };
+    const updatedEvents = [...events, newEventWithId];
+    setEvents(updatedEvents);
+    localStorage.setItem('eventsLocalesPets', JSON.stringify(updatedEvents)); // Actualizar localStorage
     toast.success('Evento agregado exitosamente!');
     closeModal();
   };
 
-  function handleInputChange (e) {
-    const { name, value } = e.target;
+  const handleDeleteEvent = () => {
+    const updatedEvents = events.filter(event => event.id !== selectedEvent.id);
+    setEvents(updatedEvents);
+    localStorage.setItem('eventsLocalesPets', JSON.stringify(updatedEvents)); // Actualizar localStorage
+    toast.success('Evento eliminado exitosamente!');
+    closeModal();
+  };
+
+  const handleInputChange = (name, value) => {
+
     setNewEvent({ ...newEvent, [name]: value });
   };
 
-  const handleRegister = (event) => {
-    toast.info(`Te has inscrito en el evento: ${event.titulo}`);
+  const handleExportEvents = () => {
+    const blob = new Blob([JSON.stringify(events)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'events.json';
+    link.click();
   };
 
   return (
-    <div className="container mx-auto my-8 relative max-w-5xl">
-      <h1 className="text-3xl font-bold mb-4 text-center">Calendario de Eventos del Refugio</h1>
+    <div className="container mx-auto py-8 relative max-w-5xl">
+          <h1 className="text-3xl text-beige font-bold mb-4 text-center">Calendario de Eventos del Refugio</h1>
       <div className="bg-white-2 shadow-md rounded-lg overflow-hidden">
         <Calendar
           localizer={localizer}
           events={events}
           startAccessor="inicio"
-          endAccessor="end"
-          style={{ height: 450, }}
+          endAccessor="fin"
+          style={{ height: 450 }}
           selectable={!onlySelect}
           onSelectEvent={openModal}
           onSelectSlot={handleSelectSlot}
@@ -114,7 +144,7 @@ const ShelterEvents = ({ onlySelect = false }) => {
           eventPropGetter={(event) => ({
             className: 'p-2 rounded-md mb-2',
           })}
-           messages={{ 
+          messages={{ 
             allDay: 'Todo el día', 
             previous: 'Anterior', 
             next: 'Siguiente', 
@@ -130,52 +160,17 @@ const ShelterEvents = ({ onlySelect = false }) => {
             showMore: total => `+ Ver más (${total})`,
             weekHeaderFormat: { week: 'short', day: '2-digit' }, 
             dayHeaderFormat: { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' } 
-            }}
-            
+          }}
         />
       </div>
 
-      <div className="mt-8  p-4 rounded-lg  shadow-lg  h-96 overflow-y-auto ">
-        <h2 className="text-3xl text-center text-gray-dark font-bold mb-4">Lista de Eventos</h2>
-        <ul className=" lg:grid grid-cols-2 gap-4">
+      <ListEvents events={events} />
 
-          {events.length === 0 && (
-            <li className="bg-white-2 p-4 border-2
-              border-beige rounded-lg shadow-md
-              h-80
-              mb-3 lg:mb-0">
-              <p className="text-center text-gray-dark">No hay eventos programados</p>
-            </li>
-            )}
-
-          {events.map(event => (
-            <li key={event.id} 
-                    className="bg-white-2 p-4 border-2
-                         border-beige rounded-lg shadow-md
-                         h-80
-                         mb-3 lg:mb-0">
-              <div>
-                <h3 className="text-xl font-bold text-center text-primary mb-2">{event.titulo}</h3>
-                <p className="text-gray-dark bg-beige-light py-2
-                    border-l-4 rounded border-beige pl-2 mb-1 ">
-                      {event.categoria}
-                </p>
-                <p className="text-gray-dark p-4 
-                    border-l-4 rounded border-beige pl-2 py-2 bg-beige-light">
-                    {moment(event.inicio).format('LLL')} - {moment(event.fin).format('LLL')}</p>
-                <p className="mt-4 h-20 overflow-y-auto
-                       border-l-4 rounded border-beige pl-2 mb-2 py-2">
-                  {event.descripcion}
-                </p>
-
-                <Button onClick={() => handleRegister(event)} 
-                  className="mt-4 p-2 bg-orange text-white-2 rounded">
-                  Inscribirse
-                </Button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-4">
+        <Button onClick={handleExportEvents} className="p-2 bg-blue text-white rounded">
+          Exportar Eventos
+          <Download />
+        </Button>
       </div>
 
       <Modal
@@ -185,31 +180,28 @@ const ShelterEvents = ({ onlySelect = false }) => {
         className="fixed inset-0 flex items-center justify-center z-50"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-40"
       >
-        <div className="bg-white-2 p-6 rounded-lg shadow-lg z-50">
+        <div className="bg-white-2 p-6 rounded-lg  z-50">
           {selectedEvent && !isAddingEvent ? (
             <div>
               <h2 className="text-xl font-bold">{selectedEvent.titulo}</h2>
               <p>Categoría: {selectedEvent.categoria}</p>
-              <p className=''>
-                Fecha: {moment(selectedEvent.inicio).format('LL')} - {moment(selectedEvent.end).format('LL')}
+              <p>
+                Fecha: {moment(selectedEvent.inicio).format('LL')} - {moment(selectedEvent.fin).format('LL')}
               </p>
               <p>Descripción: {selectedEvent.descripcion}</p>
 
-              <Button onClick={closeModal} 
-                className="mt-4 p-2 bg-red text-white rounded text-white-2 ">
+              <Button onClick={closeModal} className="mt-4 p-2 bg-red text-white rounded text-white-2 ">
                 Cerrar
+              </Button>
+              <Button onClick={handleDeleteEvent} className="mt-4 p-2 bg-red text-white-2 rounded">
+                Eliminar
+                <Trash2 />
               </Button>
             </div>
           ) : (
-            <div className='bg-white-2 p-8 rounded-lg shadow-sm'>
-              <h2 className="text-xl font-bold mb-3 ">Agregar Nuevo Evento</h2>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleAddEvent();
-                }}
-                className=''
-              >
+            <div className="bg-white-2 p-8 rounded-lg shadow-sm">
+              <h2 className="text-xl font-bold mb-3">Agregar Nuevo Evento</h2>
+              <form onSubmit={(e) => { e.preventDefault(); handleAddEvent(); }} className="">
                 <div className="mb-4">
                   <InputForm
                     id="titulo"
@@ -218,21 +210,21 @@ const ShelterEvents = ({ onlySelect = false }) => {
                     name="titulo"
                     placeholder="Título del evento"
                     value={newEvent.titulo}
-                    onChange={()=>handleInputChange(this)}
+                    onChange={(e)=>handleInputChange('titulo', e)}
                     className="mt-1 p-2 w-full border rounded"
                   />
                 </div>
 
                 <div className="mb-4">
                   <InputForm
-                    id='descripcion'
-                    type='textarea'
-                    label='Descripción'
-                    placeholder='Descripción del evento'
-                    name='descripcion'
+                    id="descripcion"
+                    type="textarea"
+                    label="Descripción"
+                    placeholder="Descripción del evento"
+                    name="descripcion"
                     value={newEvent.descripcion}
-                    onChange={()=>handleInputChange(this)}
-                    className='mt-1 p-2 w-full border rounded'
+                    onChange={(e)=>handleInputChange('descripcion', e)}
+                    className="mt-1 p-2 w-full border rounded"
                   />
                 </div>
                 <div className="mb-4">
@@ -242,7 +234,7 @@ const ShelterEvents = ({ onlySelect = false }) => {
                     label="Fecha y Hora de Inicio"
                     name="inicio"
                     value={newEvent.inicio}
-                    onChange={()=>handleInputChange(this)}
+                    onChange={(e)=>handleInputChange('inicio', e)}
                     className="mt-1 p-2 w-full border rounded"
                   />
                 </div>
@@ -252,34 +244,31 @@ const ShelterEvents = ({ onlySelect = false }) => {
                     type="datetime-local"
                     label="Fecha y Hora de Fin"
                     name="fin"
-                    value={newEvent.end}
-                    onChange={()=>handleInputChange(this)}
+                    value={newEvent.fin}
+                    onChange={(e)=>handleInputChange('fin', e)}
                     className="mt-1 p-2 w-full border rounded"
                   />
                 </div>
                 <div className="flex space-x-4">
-                  <Button onClick={closeModal} 
-                    className="p-2 bg-red text-white-2 rounded">
+                  <Button onClick={closeModal} className="p-2 bg-red text-white-2 rounded">
                     Cancelar
-                    <Trash2/>
+                    <Trash2 />
                   </Button>
                   <Button
-                    type="button"
+                    type="submit"
                     iconPosition="end"
                     onClick={handleAddEvent}
                     className="p-2 bg-success text-white-2 rounded"
                   >
                     Agregar
-                    <Plus/>
+                    <Plus />
                   </Button>
-                  
                 </div>
               </form>
             </div>
           )}
         </div>
       </Modal>
-      
       <ToastContainer />
     </div>
   );

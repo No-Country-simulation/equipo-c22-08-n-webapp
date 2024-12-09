@@ -15,14 +15,14 @@ const Footer = () => {
   };
 
   return(
-     <footer className="bg-brown text-black py-8">
+     <footer className="  py-8 text-beige">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-between">
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
               <h3 className="text-xl font-bold mb-2">Patitas Felices</h3>
               <p>Conectando mascotas desde {new Date().getFullYear()}</p>
             </div>
-            <div className="w-full md:w-1/3 mb-6 md:mb-0">
+            <div className= "w-full md:w-1/3 mb-6 md:mb-0">
               <h3 className="text-xl font-bold mb-2">¿Qué quieres hacer?</h3>
               <ul>
                 <li>
@@ -44,6 +44,7 @@ const Footer = () => {
                   Donar
                 </Link>
                   </li>
+                  
                 {/* <li>
                    <Link
                     to="/login"
@@ -66,8 +67,8 @@ const Footer = () => {
                     className="flex-grow p-4 bg-white text-black" 
                   />
                   <Button 
-                  type="submit" className="bg-orange hover:bg-orange-hover text-white  d-block">
-                  Subscribete<DollarSign className='current-fill'/> </Button>
+                  type="submit" className="bg-orange hover:bg-orange-hover text-white d-block">
+                  Unéte<DollarSign className='current-fill'/> </Button>
               
               </form>
             </div>
