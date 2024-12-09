@@ -25,37 +25,18 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Verificar que se envían ambos campos
-        if (!email || !password) {
-            return res.status(400).json({ error: "Faltan datos obligatorios" });
-        }
+        let user = await User.findOne({ email });
+        if (!user) return res.status(403).json({ error: "No existe este usuario" });
 
-        // Buscar el usuario por correo electrónico
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(403).json({ error: "No existe este usuario" });
-        }
-
-        // Verificar la contraseña
         const respuestaPassword = await user.comparePassword(password);
-        if (!respuestaPassword) {
-            return res.status(403).json({ error: "Contraseña incorrecta" });
-        }
+        if (!respuestaPassword) return res.status(403).json({ error: "Contraseña incorrecta" });
 
-        // Respuesta exitosa
-        return res.status(200).json({
-            message: "Inicio de sesión exitoso",
-            user: {
-                id: user._id,
-                email: user.email,
-            },
-        });
+        return res.json({ message: "Inicio de sesión exitoso" });
     } catch (error) {
-        console.error("Error en el login:", error);
+        console.log(error);
         return res.status(500).json({ error: "Error de servidor" });
     }
 };
-
 
 export const infoUser = async (req, res) => {
     try {

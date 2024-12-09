@@ -22,7 +22,7 @@ const Card = ({ image, id, redirect = false, title, description, phaseMotivation
   const handleAdoptClick = (id) => {
     localStorage.removeItem('idPet');
     localStorage.setItem('idPet', id);
-    navigate('/login');
+    navigate(`/adopt/${id}`);
   }
 
   const handleMouseEnter = () => { setIsHovered(true); };

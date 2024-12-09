@@ -34,12 +34,19 @@ const Login = () => {
   });
 
   const handleInputChange = (name, value) => {
-    setValue(name, value, { shouldValidate: true });
+      // setValue(name, value, { shouldValidate: true });
   };
 
   const onSubmit = (data) => {
+<<<<<<< HEAD
         fetch(`${import.meta.env.VITE_API_URL_USERS}/user/login`, {
     // fetch(`${import.meta.env.VITE_API_URL_BACKEND}/login`, {
+=======
+    console.log('Form submitted:', data);
+
+    // Send da
+    fetch(`${import.meta.env.VITE_API_URL_USERS}/user/login`, {
+>>>>>>> 7544dd41893107be575d0ad4bac182447fc802d2
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
