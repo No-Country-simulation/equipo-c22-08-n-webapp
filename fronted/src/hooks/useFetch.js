@@ -23,27 +23,16 @@ useEffect(() => {
     useEffect(() => {
         //Lo usan para cerrar una peticion
         const controller = new AbortController();
-<<<<<<< HEAD
         setLoading(true);
         const fetchData = async () => {
-=======
-        setLoading(true)
-        const fetchData = async()=>{
-            console.log(`url es`,url)
->>>>>>> 7544dd41893107be575d0ad4bac182447fc802d2
             try {
                 const response = await fetch(url, { ...options, signal: controller.signal });
                 if (!response.ok) {
                     throw new Error("Error en la petición");
                 }
                 const jsonData = await response.json();
-<<<<<<< HEAD
                 setData(jsonData);
                 setError(null);
-=======
-                setData(jsonData)
-                setError(null)               
->>>>>>> 7544dd41893107be575d0ad4bac182447fc802d2
             } catch (error) {
                 setError(error);
             } finally {
@@ -54,7 +43,7 @@ useEffect(() => {
         return () => {
             controller.abort();
         };
-    }, [url, options]);
+    }, [url]);
 
     return { data, loading, error };
 };
