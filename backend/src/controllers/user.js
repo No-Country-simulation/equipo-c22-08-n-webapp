@@ -7,6 +7,7 @@ const registerCtrl = async (req, res) => {
 
 const loginCtrl = async (req, res) => {
   const { email, password } = req.body;
+  console.log({"email is:": email,"password is:": password })
   const responseUser = await loginUser({ email, password });
 
   if (responseUser === "PASSWORD_INCORRECT") {
