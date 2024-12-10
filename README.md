@@ -28,7 +28,7 @@ Optimización de Rendimiento: Mejoramos la carga y el rendimiento de la página 
 | Nombre                | Rol         | Linkedin                                                             | Portafolio                                   |
 |-----------------------|-------------|----------------------------------------------------------------------|----------------------------------------------|
 | Mario Passalia        | Team Leader |[Linkedin]()   | |
-| Alejandro Olarte               | Front End |[Linkedin]()                     |[GitHub](https://github.com/Alejool)               |
+| Alejandro Olarte               | Front End |[Linkedin](https://www.linkedin.com/in/alejandro-olarteli-74a04223b/)                     |[GitHub](https://github.com/Alejool)               |
 | Frank Josue Cruces          | Front End   |[Linkedin]()       | [GitHub](https://github.com/Frcru)  |
 | Soledad Peloc      | Front End     |[Linkedin](www.linkedin.com/in/sol-peloc)                   |[GitHub](https://github.com/SolPeloc)                  |
 | Gastón de la Fuente| UX      |[Linkedin](https://www.linkedin.com/in/gaston-de-la-fuente/)                   |[GitHub](https://github.com/Gaston-del)       | |
@@ -38,7 +38,6 @@ Optimización de Rendimiento: Mejoramos la carga y el rendimiento de la página 
 Agradecemos la oportunidad a No Country por darnos la oportunidad y el espacio para  desarrollar y fortalecer nuestras competencias interpersonales y técnicas.
 
 ## Instalación y ejecución
-
 
 ## Deployment 
 
