@@ -14,6 +14,9 @@ import CreateAccountMultiSep from '@/pages/CreateAccountMultiSep';
 import SolicAdopt from '@/pages/SolicAdopt';
 import LayoutPets from '@/components/Layout/LayoutPets';
 import ShelterEvents from '@/pages/ShelterEvents';
+import  Adoption  from '@/pages/Adoption';
+import DashboardAdopt from '@/pages/DashboardAdopt';
+import UserRequest from '@/pages/UserRequest';
 import Adoption from '@/pages/Adoption';
 import NotFound from '@/pages/NotFound';
 import SectionsEvents from '@/pages/SectionsEvents';
@@ -115,6 +118,42 @@ const Router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:'/adoption',
+    element:<Layout/>,
+    children:[
+      {
+        index:true,
+        element:<Adoption/>,      
+      }
+  
+      
+    ]
+  },
+  {
+    path:'/dashboard',
+    element:<Layout/>,
+    children:[
+      {
+        index:true,
+        element:<DashboardAdopt/>,      
+      }
+  
+      
+    ]
+  },
+  {
+    path:'/request/:id',
+    element:<Layout/>,
+    children:[
+      {
+        index:true,
+        element:<UserRequest/>,      
+      }
+  
+      
+    ]
+  }
 ]);
 
 export { Router };

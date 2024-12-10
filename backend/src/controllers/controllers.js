@@ -47,3 +47,4 @@ export const infoUser = async (req, res) => {
         return res.status(500).json({ error: "Error de servidor" });
     }
 };
+
