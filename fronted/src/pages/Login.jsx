@@ -4,7 +4,6 @@ import { Mail, Lock, HeartHandshake } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import Button from '@/components/ui/button';
-import Button from '@/components/ui/button';
 import InputForm from '@/components/ui/InputForm';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
