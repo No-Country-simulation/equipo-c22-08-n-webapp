@@ -5,6 +5,8 @@ import { Stethoscope, CalendarHeart, Dna, HeartHandshake } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '@/components/ui/Button';
 import { removeHtmlTags } from '@/utils/helpers';
+
+
 export default function Pet({ animal }) {
   console.log('pet');
   console.log(animal);
@@ -12,13 +14,13 @@ export default function Pet({ animal }) {
 
   const handleAdoptClick = () => { 
     localStorage.removeItem('idPet');
-    localStorage.setItem('idPet', animal.id); 
+    localStorage.setItem('idPet', animal?.id); 
     navigate('/login'); 
   }
 
   if (!animal || Object.keys(animal).length === 0) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen ">
         <div className="max-w-md rounded overflow-hidden shadow-lg p-6 bg-white text-center">
           <img className="w-full h-48 object-cover mb-4" src="https://via.placeholder.com/400x300?text=No+Mascota" alt="No se encontró mascota" />
           <div className="px-6 py-4">
@@ -33,14 +35,14 @@ export default function Pet({ animal }) {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center lg:p-28">
-      <div className="max-w-2xl rounded overflow-hidden shadow-2xl  w-full">
-        <div className="flex flex-col lg:flex-row">
+    <div className="flex flex-col lg:flex-row justify-center items-center lg:p-28 ">
+      <div className="max-w-2xl rounded overflow-hidden   w-full">
+        <div className="flex flex-col justify-center items-center lg:flex-row">
           <div className=" lg:w-1/2">
             <ImageCarousel images={animal?.imagenes} />
           </div>
           
-          <div className="w-full lg:w-1/2 p-7 ">
+          <div className="w-full lg:w-1/2 p-7 bg-beige shadow-2xl ">
             <h2 className="font-bold text-4xl text-center text-secondary">
               {removeHtmlTags(animal?.nombre)}
             </h2>

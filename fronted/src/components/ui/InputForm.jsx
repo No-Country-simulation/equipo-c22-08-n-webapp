@@ -14,6 +14,15 @@ const InputForm = forwardRef(({
   label,
   ...props
 }, ref) => {
+
+   const handleChange = (e) => {
+    const value = e.target.value;
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
+        <p className="mt-1 text-xs text-red">{error}</p>
   return (
     <div className="w-full">
       {label && (
@@ -30,10 +39,7 @@ const InputForm = forwardRef(({
         {type === "textarea" ? (
           <textarea
             placeholder={placeholder}
-            onChange={(e) => {
-              onChange?.(e.target.value);
-              props.onChangeNative?.(e.target.value);
-            }}
+           onChange={handleChange}
             ref={ref}
             className={`
               w-full pl-12 pr-4 py-3 border rounded-lg
@@ -48,12 +54,7 @@ const InputForm = forwardRef(({
           <input
             type={type}
             placeholder={placeholder}
-            // onChange={(e) => {
-            //   onChange?.(e.target.value);
-            //   props.onChangeNative?.(e);
-            // }}
-
-            onChange={(e) => onChange(e)}
+            onChange={handleChange}
             ref={ref}
             className={`
               w-full pl-12 pr-4 py-3 border rounded-lg

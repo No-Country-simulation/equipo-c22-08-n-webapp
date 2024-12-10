@@ -3,7 +3,8 @@ import { Outlet } from 'react-router-dom';
 
 import Image from '@/components/ui/Image';
 import Logo from '@/assets/pet.avif';
-
+import ImageBg from '@/assets/bg.jpg';
+    
 
 function LayoutLogin() {
   return (
@@ -11,7 +12,13 @@ function LayoutLogin() {
         from-gray-100 to-white 
         flex items-center 
         justify-center
-        bg-gray-dark">
+        bg-gray-dark"
+         style={{
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${ImageBg})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center'
+  }}>
 
       <div className="bg-white-2 rounded-2xl shadow-xl max-w-4xl grid md:grid-cols-2 overflow-hidden">
         <div

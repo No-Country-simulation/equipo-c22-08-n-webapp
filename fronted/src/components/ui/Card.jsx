@@ -100,7 +100,8 @@ const Card = ({ image, id, redirect = false, title, description, phaseMotivation
             </div>
           )}
 
-          <p className="text-lg text-wrap max-h-28 overflow-y-auto scrollbar-hide">{removeHtmlTags(description)}</p>
+          <p className="text-lg text-wrap max-h-28 
+            overflow-y-auto custom-scrollbar">{removeHtmlTags(description)}</p>
 
           {sectionDetails && edad &&
             <div className="flex flex-row justify-evenly font-serif text-xs">

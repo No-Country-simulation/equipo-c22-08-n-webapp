@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, Github, Facebook, Twitter, HeartHandshake } from 'lucide-react';
+import { Mail, Lock, HeartHandshake } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import Button from '@/components/ui/button';
 import Button from '@/components/ui/button';
 import InputForm from '@/components/ui/InputForm';
 import { ToastContainer, toast } from 'react-toastify';
@@ -35,7 +36,8 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
+      // email: '',
+      username: '',
       password: ''
     }
   });

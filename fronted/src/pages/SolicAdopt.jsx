@@ -5,7 +5,7 @@ import * as zod from 'zod';
 import { User, MapPin, ArrowRight, Phone, Mail, MapPinHouse } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import InputForm from '@/components/ui/InputForm';
-import SelectForm from '../components/ui/SelectForm';
+import SelectForm from '@/components/ui/SelectForm';
 
 // Validation Schemas
 const schemaStep1 = zod.object({
@@ -31,9 +31,7 @@ const schemaStep3 = zod.object({
   }),
 });
 
-const onChange = (e) => {
-  console.log('fff', e);
-}
+ 
 
 const getResolver = (step) => {
   if (step === 1) return zodResolver(schemaStep1);
@@ -53,8 +51,7 @@ const Step1 = () => {
         icon={User}
         placeholder="Alejandro, Maria, etc."
         error={errors.nombre?.message}
-        {...register('nombre')}
-          onchange={e => onChange(this)}  
+        {...register('nombre')}    
       />
       <InputForm
         label="Apellido"
@@ -110,7 +107,7 @@ const Step2 = () => {
 };
 
 const Step3 = () => {
-  const { register, formState: { errors } } = useFormContext();
+  const { register, formState: { errors }, setValue } = useFormContext();
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-gray mb-4">Métodos de Contacto</h2>
@@ -174,10 +171,11 @@ const CreateAccountMultiStep = () => {
     resolver: getResolver(step)
   });
 
+
+
   const onNext = async () => {
     const valid = await methods.trigger();
     if (valid) {
-      // Save current step's data
       const currentStepData = methods.getValues();
       setFormData(prev => ({ ...prev, ...currentStepData }));
 
@@ -197,14 +195,13 @@ const CreateAccountMultiStep = () => {
   return (
    <div 
     className="shadow-md bg-beige-light     
-      rounded-lg m-auto lg:m-0 max-w-2xl ml-auto mt-2">
+      rounded-xl m-auto lg:m-0 max-w-2xl ml-auto mt-2">
 
       <FormProvider {...methods}>
         <form className="
-        shadow-beige 
-           shadow-lg 
-            
-            rounded-lg  ">
+        shadow-gray 
+           shadow-md 
+            rounded-xl  ">
           <h2 
             className="text-3xl font-bold text-center
            text-white-2 py-4 bg-gray-dark mb-6">

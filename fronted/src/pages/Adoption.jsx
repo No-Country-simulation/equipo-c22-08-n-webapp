@@ -31,12 +31,22 @@ const Adoption = () => {
             setFilteredPets(pets?.data)
             setInitialData(pets?.data)
         }
+<<<<<<< HEAD
+    }, []);
+    //revisar cualquier cambio por cualquier filtro aplicado
+    // useEffect(() => {
+    //     console.log("sexo:", sexOption, "tamano:", tamanoOption)
+    //     console.log("gato:", isActiveCat, "perro:", isActiveDog)
+    //     applyFilters()
+    // }, [isActiveDog, isActiveCat, sexOption, tamanoOption, applyFilters]);
+=======
     }, [pets?.data]);
 
     useEffect(() => {
         applyFilters()
         setCurrentPage(1)
     }, [isActiveDog, isActiveCat, sexOption, tamanoOption]);
+>>>>>>> 7544dd41893107be575d0ad4bac182447fc802d2
 
     const handleCatDogButton = (tipo) => {
         if (tipo === 'cat') {
@@ -60,9 +70,12 @@ const Adoption = () => {
         }
     };
 
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> 7544dd41893107be575d0ad4bac182447fc802d2
     const handleTamano = (e) => {
         setTamanoOption(e.target.value)
     }
