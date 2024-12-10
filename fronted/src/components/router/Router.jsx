@@ -13,6 +13,8 @@ import SolicAdopt from '@/pages/SolicAdopt';
 import LayoutPets from '@/components/Layout/LayoutPets';
 import ShelterEvents from '@/pages/ShelterEvents';
 import  Adoption  from '@/pages/Adoption';
+import DashboardAdopt from '@/pages/DashboardAdopt';
+import UserRequest from '@/pages/UserRequest';
 
 const Router = createBrowserRouter([
   {
@@ -95,6 +97,30 @@ const Router = createBrowserRouter([
       {
         index:true,
         element:<Adoption/>,      
+      }
+  
+      
+    ]
+  },
+  {
+    path:'/dashboard',
+    element:<Layout/>,
+    children:[
+      {
+        index:true,
+        element:<DashboardAdopt/>,      
+      }
+  
+      
+    ]
+  },
+  {
+    path:'/request/:id',
+    element:<Layout/>,
+    children:[
+      {
+        index:true,
+        element:<UserRequest/>,      
       }
   
       
