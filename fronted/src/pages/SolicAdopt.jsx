@@ -51,16 +51,18 @@ const Step1 = () => {
         label="Nombre"
         type="text"
         icon={User}
-        name= "nombre"
-        id= "nombre"
+        name="nombre"
+        id="nombre"
         placeholder="Alejandro, Maria, etc."
         error={errors.nombre?.message}
-        {...register('nombre')}    
+        {...register('nombre')}
       />
       <InputForm
         label="Apellido"
         type="text"
         icon={User}
+        name="apellido"
+        
         placeholder="Fernadez, Alvarez, etc."
         error={errors.apellido?.message}
         {...register('apellido')}
@@ -149,60 +151,74 @@ const CreateAccountMultiStep = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [idMascota, setIdMascota] = useState(null);
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const methods = useForm({
     resolver: getResolver(step),
   });
 
   useEffect(() => {
-    const storedUserData = JSON.parse(localStorage.getItem('userData'));
-    const idPet = localStorage.getItem('idPet');
-    console.log('pets:'+idPet)
 
-    if(idPet === null || idPet === undefined || idPet === '' ) 
-    {
+    try {
+      const storedUserData = JSON.parse(localStorage.getItem('userData'));
+      setIdMascota(localStorage.getItem('idPet'));
+      if (storedUserData) {
+        console.log("SI ESTOY ENTRANDO AL IF",storedUserData.user)
+        console.log("SI ESTOY ENTRANDO AL USER",storedUserData.user)
+        const { email, name } = storedUserData.user;
+        setFormData({ email, nombre: name });
+        methods.reset({ email, nombre: name });
+      }
+    } catch (error) {
+      let storedUserData = null;
+    }
+
+    const idPet = localStorage.getItem('idPet');
+
+    if (idPet === null || idPet === undefined || idPet === '') {
       navigate('/adoption');
     }
-    
-    if (storedUserData) {
-      const { email, firstName, lastName } = storedUserData;
-      setFormData({ email, nombre: firstName, apellido: lastName });
-      methods.reset({ email, nombre: firstName, apellido: lastName });
-    }
+
+
 
     // Ahora, verificamos si hay una solicitud almacenada en localStorage
-    const storedSolicitud = JSON.parse(localStorage.getItem('solicitud'));
-    if (storedSolicitud) {
-      setFormData((prevData) => ({ ...prevData, ...storedSolicitud }));
-      setIdMascota(storedSolicitud.idMascota);  
-      methods.reset((prevData) => ({ ...prevData, ...storedSolicitud }));
-    } else {
+    
+    // const storedSolicitud = JSON.parse(localStorage.getItem('solicitud'));
+    // if (storedSolicitud) {
+    //   setFormData((prevData) => ({ ...prevData, ...storedSolicitud }));
+    //   setIdMascota(storedSolicitud.idMascota);
+    //   methods.reset((prevData) => ({ ...prevData, ...storedSolicitud }));
+    // } else {
 
-      const newIdMascota = `${idPet}`;  
-      setIdMascota(newIdMascota);
-    }
+    //   const newIdMascota = `${idPet}`;
+    //   setIdMascota(newIdMascota);
+    // }
   }, [methods]);
 
   const onNext = async () => {
     const valid = await methods.trigger();
     if (valid) {
       const currentStepData = methods.getValues();
-      
+
       // Acumular los datos en el estado `formData`
-      const newFormData = { 
-        ...formData, 
+      const newFormData = {
+        ...formData,
         ...currentStepData,
-        idMascota, 
-        solicitudInfo: { 
-          tipoSolicitud: "adopcion", 
+        idMascota,
+        solicitudInfo: {
+          tipoSolicitud: "adopcion",
         }
       };
       setFormData(newFormData);
 
       // Guardar los datos completos de la solicitud en localStorage
-      localStorage.setItem('solicitud', JSON.stringify(newFormData));
+      const existingSolicitudes = JSON.parse(localStorage.getItem('solicitud')) || [];
+      
+      const updatedSolicitudes = [...existingSolicitudes, newFormData];
+      
+      localStorage.setItem('solicitud', JSON.stringify(updatedSolicitudes));
 
+      
       if (step === 1) {
         setStep(2);
       } else if (step === 2) {
@@ -212,7 +228,7 @@ const CreateAccountMultiStep = () => {
         toast.success('Solicitud completada exitosamente!');
 
         setTimeout(() => {
-        navigate('/adoption');
+          navigate('/adoption');
         }, 1500);
 
       }
@@ -253,7 +269,7 @@ const CreateAccountMultiStep = () => {
               className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               {step === 3 ? 'Enviar' : 'Siguiente'}
-              <ArrowRight className='text-secondary'/>
+              <ArrowRight className='text-secondary' />
             </Button>
           </div>
         </form>

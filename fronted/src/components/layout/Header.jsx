@@ -10,8 +10,8 @@ const Header = () => {
 
   useEffect(() => {
     const checkLoginStatus = () => {
-      const userData = JSON.parse(localStorage.getItem('userData'));
-      setIsLoggedIn(userData && userData.accessToken ? true : false);
+      const userData = localStorage.getItem('userData');
+      setIsLoggedIn(userData && userData ? true : false);
     };
 
     checkLoginStatus();
