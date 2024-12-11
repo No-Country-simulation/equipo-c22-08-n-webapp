@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Dog, Palette, Ruler, 
+  Dog, Palette, Ruler, Siren,
   Heart, Shield, Syringe, Clipboard
 } from 'lucide-react';
 import ImageCarousel from '@/components/ui/ImageCarousel';
 import Button from '@/components/ui/Button';
+import { removeHtmlTags } from '@/utils/helpers';
 
 export default function PetProfile() {
   const [activeSection, setActiveSection] = useState('info');
@@ -18,6 +19,7 @@ export default function PetProfile() {
       fetch(`${import.meta.env.VITE_API_URL}/animal/${id}`)
         .then(response => response.json())
         .then(data => {
+          console.log('data', data);
           setAnimal(data.data);
           setLoading(false);
         })
@@ -37,19 +39,46 @@ export default function PetProfile() {
             <div className="grid grid-cols-3 gap-4 bg-gray-light rounded-xl p-4">
               <div className="flex flex-col items-center">
                 <Ruler className="w-6 h-6 text-primary mb-2" />
-                <span className="font-semibold">{animal?.edad} años</span>
+                <span className="font-semibold">{animal?.edad}</span>
               </div>
               <div className="flex flex-col items-center">
                 <Dog className="w-6 h-6 text-secondary mb-2" />
                 <span className="font-semibold">{animal?.genero}</span>
               </div>
-              <div className="flex flex-col items-center">
+              {/* <div className="flex flex-col items-center">
                 <Palette className="w-6 h-6 text-green-lila mb-2" />
-                <span className="font-semibold">{animal?.tipo}</span>
+                <span className={`font-semibold h-3 w-4 bg-[${animal?.color}]`}></span>
+              </div> */}
+              <div className="flex flex-col items-center">
+                <Siren className="w-6 h-6 text-secondary mb-2" />
+                <span 
+                  className={`font-semibold`}>
+                  {animal?.estado}
+                  </span>
               </div>
             </div>
           </div>
         );
+
+      case 'health':
+        return (
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4 bg-gray-light rounded-xl p-4">
+
+              <div className="flex flex-col items-center">
+               <Syringe className="w-6 h-6 text-secondary mb-2" />
+                <span className="font-semibold">Vacunas: 
+                  {animal?.vacunas ? 'Sí' : 'No'}</span>
+              </div>
+               <div className="flex flex-col items-center">
+                   <Shield className="w-6 h-6 text-primary mb-2" />
+                   <span className="font-semibold">Esterilizado: 
+                    {animal?.esterilizado ? 'Sí' : 'No'}</span>
+                </div>
+          </div>
+        </div>
+        );
+
       default:
         return null;
     }
@@ -57,13 +86,14 @@ export default function PetProfile() {
 
   return (
     <div>
-      <div className="bg-beige-light  shadow-md rounded-lg m-auto pb-7 max-w-xl overflow-hidden">
-        <div className="h-48 bg-gradient-to-r  flex items-center justify-center">
+      <div className="bg-beige-light  shadow-md rounded-lg m-auto 
+          pb-20 max-w-2xl ">
+        <div className="bg-gradient-to-r  flex items-center justify-center">
           <div className="relative w-full">
             {!loading && animal.imagenes && (
               <ImageCarousel 
                 images={animal?.imagenes}
-                clases={" w-full border-white object-cover w-10 -top-3"}
+                clases={" w-full border-white -top-3 "}
               />
             )}
             <Button 
@@ -76,8 +106,8 @@ export default function PetProfile() {
           </div>
         </div>
 
-        <div className="px-6 text-center pt-44">
-          <h2 className="text-xl font-bold text-primary mb-2">
+        <div className="px-6 text-center pt-8 ">
+          <h2 className="font-bold text-primary mb-2 text-2xl">
             {animal?.nombre}
           </h2>
           <p className="text-secondary mb-4">{animal?.vacunas ? 'Vacunas al día' : 'Vacunas no al día'}</p>
@@ -85,7 +115,8 @@ export default function PetProfile() {
           <div className="flex justify-center mb-6 bg-w">
             <Button 
               onClick={() => setActiveSection('info')}
-              className={`px-4 py-2 rounded-full m-0 transition ${activeSection === 'info' ? 'bg-secondary text-white-2' : 'bg-transparent'}`}
+              className={`px-4 py-2 rounded-full m-0 transition 
+                ${activeSection === 'info' ? 'bg-secondary text-white-2' : 'bg-transparent'}`}
             >
               Información
             </Button>
@@ -99,6 +130,14 @@ export default function PetProfile() {
 
           <div className="min-h-[200px]">
             {renderSection()}
+            <div className='pt-8'>
+              {/* <Clipboard className="w-6 h-6 text-primary mb-2" /> */}
+              <span className="font-semibold text-xl ">Descripción:</span>
+              <p className="text-secondary text-xl
+                text-wrap">
+                  {removeHtmlTags(animal?.desc_fisica)}
+                  </p>
+            </div>
           </div>
         </div>
       </div>

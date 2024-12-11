@@ -1,7 +1,7 @@
 
 export function removeHtmlTags(str) {
-  if ((str === null) || (str === '')) {
-    return false;
+  if ((str === null) || (str === '') || (str === undefined)) {
+    return '';
   } else {
     str = str.toString();
   }

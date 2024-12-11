@@ -20,42 +20,42 @@ export default function Index() {
 
   useEffect(() => {
 
-    fetch(`${import.meta.env.VITE_API_URL}/animales`) 
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        const fetchedSlides = data.data.map(animal => ({
-          id: animal.id,
-          image: animal.imagen,
-          title: animal.nombre,
-          description: animal.desc_fisica,
-          vacunas: animal.vacunas,
-          buttonText: 'Adopt Me!'
-        }));
+     const fetchData = () => {
+      fetch(`${import.meta.env.VITE_API_URL}/animales`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          const fetchedSlides = data.data.map(animal => ({
+            id: animal.id,
+            image: animal.imagen,
+            title: animal.nombre,
+            description: animal.desc_fisica,
+            vacunas: animal.vacunas,
+            buttonText: 'Adopt Me!'
+          }));
 
-        setSlides(fetchedSlides);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      });
+          setSlides(fetchedSlides);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          setLoading(false);
+        });
+    };
+
+    fetchData();
+
+    // const intervalId = setInterval(fetchData, 5000); 
+    // return () => clearInterval(intervalId);
   }, []);
 
   const handleAdoptClick = () => {
-    navigate('/adoption');
+    navigate('/login');
   };
 
 
   return (
-    <div className="min-h-screen" 
-  //   style={{
-  //   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${ImageBg})`,
-  //   backgroundSize: 'cover',
-  //   backgroundRepeat:'no-repeat',
-  //   backgroundPosition: 'center'
-  // }}>
-  >
+    <div className="min-h-screen">
       <main className="mx-auto px-4 sm:px-6  lg:px-8 py-12 text-white-2">
         <div className="rounded-lg  overflow-hidden mx-auto max-w-7xl">
           <div className="text-center flex flex-col items-center">
@@ -68,7 +68,7 @@ export default function Index() {
               bgColor="secondary"
               hoverColor="green-lila"
 
-              onClick={() => navigate('/adoption')}
+              onClick={() => navigate('/login')}
             >
               Adopta
               <Cat className="mr-1" />
@@ -114,9 +114,9 @@ export default function Index() {
           )}
         </div>
       </section>
-
       <section className="font-sans py-10 ">
-        {/* <ShelterEvents onlySelect='true' /> */}
+      <h1 className="text-3xl text-beige font-bold mb-4 text-center">Calendario de Eventos del Refugio</h1>
+        <ShelterEvents onlySelect='true' />
       </section>
 
 

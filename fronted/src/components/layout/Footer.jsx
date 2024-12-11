@@ -27,7 +27,7 @@ const Footer = () => {
               <ul>
                 <li>
                   <Link
-                    to="/adopt"
+                    to="/login"
                     className=" hover:text-green-lila px-3 py-2 
                     rounded-md font-medium"
                   >
@@ -35,7 +35,7 @@ const Footer = () => {
                     Adopta
                   </Link>
                   </li>
-                <li>
+                {/* <li>
                  <Link
                   to="/donate"
                   className=" hover:text-green-lila px-3 py-2 rounded-md font-medium"
@@ -43,7 +43,7 @@ const Footer = () => {
                   <DollarSign className="inline-block mr-1" size={18} />
                   Donar
                 </Link>
-                  </li>
+                  </li> */}
                   
                 {/* <li>
                    <Link
@@ -58,7 +58,7 @@ const Footer = () => {
             </div>
             <div className="w-full md:w-1/3 ">
               <h3 className="text-xl font-bold mb-2">Conéctate con nosotros</h3>
-              <form className="flex items-center flex-col lg:flex-row">
+              {/* <form className="flex items-center flex-col lg:flex-row">
                 <InputForm  
                     type="email" 
                     placeholder="Enter your email" 
@@ -70,7 +70,7 @@ const Footer = () => {
                   type="submit" className="bg-orange hover:bg-orange-hover text-white d-block">
                   Unéte<DollarSign className='current-fill'/> </Button>
               
-              </form>
+              </form> */}
             </div>
           </div>
           <div className="mt-8 text-center">

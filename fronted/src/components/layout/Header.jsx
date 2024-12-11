@@ -1,71 +1,71 @@
 import { Link } from 'react-router-dom';
-import { PawPrint, Home, DollarSign, LogIn } from 'lucide-react';
-
+import { PawPrint, LogIn } from 'lucide-react';
 import Logo from '@/assets/logo1-r.png';
-import Image from '@/components/ui/Image';
-import Dropdown from './Dropdown';
+import Image from  '@/components/ui/Image';
+import { useEffect, useState } from 'react';
+import Button from '@/components/ui/Button';
 
+const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      setIsLoggedIn(userData && userData.accessToken ? true : false);
+    };
 
-const Header = () => (
-  <header>
-    <nav className=" bg-transparent p-4 text-wrap flex items-center bg-transparentr text-beige text-2xl">
-      <div className="md:flex w-[90%] text-center justify-between items-center h-auto md:h-44 ">
-        <Link to="/">
-          <div className="flex items-center justify-center space-x-2">
-            {/* Logo */}
-            {/* <PawPrint className="h-8 w-8 text-beige" /> */}
-            <Image src={Logo} alt='Logo' className=" md:mt-24 h-[200px] w-26 block" setAnimation={true} />
+    checkLoginStatus();
+
+    window.addEventListener('storage', checkLoginStatus);
+
+  
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userData');
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <header>
+      <nav className="bg-transparent p-4 text-wrap flex items-center text-beige text-2xl">
+        <div className="md:flex w-[90%] text-center justify-between items-center h-auto md:h-44">
+          <Link to="/">
+            <div className="flex items-center justify-center space-x-2">
+        
+              <Image src={Logo} alt='Logo' className="md:mt-24 h-[200px] w-26 block" setAnimation={true}/>
+            </div>
+          </Link>
+          <div className="flex justify-center items-center space-x-4">
+
+            {!isLoggedIn && (
+              <Link
+                to="/login"
+                className="hover:text-beige px-3 py-2 rounded-md font-medium"
+              >
+                Inicia sesión
+                <LogIn className="inline-block ml-4 w-8 h-10 " size={18} />
+              </Link>
+            )}
+
+  
+            {isLoggedIn && (
+              <Button
+                onClick={handleLogout}
+                className="hover:text-beige px-3 py-2 rounded-md font-medium"
+              >
+                Cerrar sesión
+                <PawPrint className="inline-block ml-4 w-8 h-10 " size={18} />
+              </Button>
+            )}
           </div>
-        </Link>
-        <div className="flex justify-center items-center space-x-4">
-          {/* <Link
-            to="/adopt"
-            className="hover:text-green-lila px-3 py-2 rounded-md font-medium"
-          >
-            <Home className="inline-block mr-1" size={18} />
-            Adopta
-          </Link>
-          <Link
-            to="/donate"
-            className="hover:text-green-lila px-3 py-2 rounded-md font-medium"
-          >
-            <DollarSign className="inline-block mr-1" size={18} />
-            Donar
-          </Link> */}
-          <Dropdown/>
-          <Link
-            to="/dashboard"
-            className="hover:text-beige px-3 py-2 rounded-md font-medium"
-          >
-            Solicitudes
-
-          </Link>
-          <Link
-            to="/events"
-            className="hover:text-beige px-3 py-2 rounded-md font-medium"
-          >
-            Eventos
-
-          </Link>
-          <Link
-            to="/adoption"
-            className="hover:text-beige px-3 py-2 rounded-md font-medium"
-          >
-            Adopciones
-
-          </Link>
-          <Link
-            to="/login"
-            className="hover:text-beige px-3 py-2 rounded-md font-medium"
-          >
-            Inicia sesión
-            <LogIn className="inline-block ml-4 w-8 h-10 " size={18} />
-          </Link>
         </div>
-      </div>
-    </nav>
-  </header>
-);
+      </nav>
+    </header>
+  );
+};
 
 export default Header;

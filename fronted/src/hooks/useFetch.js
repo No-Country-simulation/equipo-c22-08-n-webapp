@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
+
 
 
 //Para recibir data de un API
@@ -10,13 +11,13 @@ export const useFetch = (url, options = {}) => {
 
     useEffect(() => {
     if (error) {
-        toast.error('An error occurred. Please try again.');
+        // toast.error('An error occurred. Please try again.');
     }
 }, [error]);
 
 useEffect(() => {
     if (data) {
-        toast.success('Data fetched successfully.');
+        // toast.success('Data fetched successfully.');
     }
 }, [data]);
 
