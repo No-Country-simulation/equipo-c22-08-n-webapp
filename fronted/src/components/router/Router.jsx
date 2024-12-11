@@ -18,6 +18,7 @@ import DashboardAdopt from '@/pages/DashboardAdopt';
 import UserRequest from '@/pages/UserRequest';
 import NotFound from '@/pages/NotFound';
 import SectionsEvents from '@/pages/SectionsEvents';
+import Adoption from '@/pages/Adoption';
 
 const Router = createBrowserRouter([
   {
