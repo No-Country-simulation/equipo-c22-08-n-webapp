@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { CircleArrowLeft, User, PawPrint, Phone, Mail, MapPinned } from "lucide-react";
+import {Link} from 'react-router-dom'
 
 const UserProfile = () => {
   const [isApproved, setIsApproved] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
 
-  useEffect(()=>{
-    
+  useEffect(() => {
+
   })
 
   const handleApprove = () => {
@@ -42,9 +43,11 @@ const UserProfile = () => {
           {/* Header */}
           <div className="bg-blue-600 p-6">
             <div className="flex items-center">
-              <button className="text-white mr-4">
-                <CircleArrowLeft className="h-6 w-6" />
-              </button>
+              <Link to={"/dashboard"}>
+                <button className="text-white mr-4">
+                  <CircleArrowLeft className="h-6 w-6" />
+                </button>
+              </Link>
               <h1 className="text-2xl font-bold text-white">Perfil de usuario</h1>
             </div>
           </div>

@@ -14,7 +14,6 @@ import CreateAccountMultiSep from '@/pages/CreateAccountMultiSep';
 import SolicAdopt from '@/pages/SolicAdopt';
 import LayoutPets from '@/components/Layout/LayoutPets';
 import ShelterEvents from '@/pages/ShelterEvents';
-import  Adoption  from '@/pages/Adoption';
 import DashboardAdopt from '@/pages/DashboardAdopt';
 import UserRequest from '@/pages/UserRequest';
 import NotFound from '@/pages/NotFound';

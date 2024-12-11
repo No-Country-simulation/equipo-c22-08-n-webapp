@@ -1,9 +1,9 @@
-import { useFetch } from "../hooks/useFetch"
-import Card from "../components/ui/Card.jsx"
-import DogIconButton from "../components/ui/DogIconButton.jsx"
-import CatIconButton from "../components/ui/CatIconButton.jsx"
-import { useEffect, useState } from "react"
-import { Filter, FilterBy } from "../components/ui/Filter.jsx"
+import { useState, useEffect } from "react"
+import { useFetch } from "@/hooks/useFetch"
+import Card from "@/components/ui/Card.jsx"
+import DogIconButton from "@/components/ui/DogIconButton.jsx"
+import CatIconButton from "@/components/ui/CatIconButton.jsx"
+import { Filter, FilterBy } from "@/components/ui/Filter.jsx"
 import { Sliders } from "lucide-react"
 import { Link } from "react-router-dom"
 import { ToastContainer } from 'react-toastify';
@@ -20,7 +20,6 @@ const Adoption = () => {
     const [filteredPets, setFilteredPets] = useState([]);
     const [initialData, setInitialData] = useState([]);
     const [sexOption, setSexOption] = useState("")
-    const [tamanoOption, setTamanoOption] = useState()
     const [isMoreFilters, setIsMoreFilters] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,10 +32,27 @@ const Adoption = () => {
         }
     }, [pets?.data]);
 
+    const applyFilters = () => {
+        let filteredPets = initialData;
+        if (isActiveDog && !isActiveCat) {
+            filteredPets = filteredPets.filter(pet => pet.tipo.toLowerCase().includes("perro"));
+        }
+        if (isActiveCat && !isActiveDog) {
+            filteredPets = filteredPets.filter(pet => pet.tipo.toLowerCase().includes("gato"));
+        }
+        if (sexOption.length > 0) {
+            filteredPets = filteredPets.filter(pet => pet.genero.includes(sexOption.toLowerCase()));
+        }
+        if (tamanoOption) {
+            filteredPets = filteredPets.filter(pet => pet.tamano.toLowerCase() === tamanoOption.toLowerCase());
+        }
+        setFilteredPets(filteredPets);
+    };
+
     useEffect(() => {
         applyFilters()
         setCurrentPage(1)
-    }, [isActiveDog, isActiveCat, sexOption, tamanoOption]);
+    }, [isActiveDog, isActiveCat, sexOption]);
 
     const handleCatDogButton = (tipo) => {
         if (tipo === 'cat') {
@@ -60,30 +76,10 @@ const Adoption = () => {
         }
     };
 
-    const handleTamano = (e) => {
-        setTamanoOption(e.target.value)
-    }
-
     const handleSexo = (e) => {
         setSexOption(e.target.value)
     }
 
-    const applyFilters = () => {
-        let filteredPets = initialData;
-        if (isActiveDog && !isActiveCat) {
-            filteredPets = (filteredPets.filter(pet => pet.tipo.toLowerCase().includes("perro")));
-        }
-        if (isActiveCat && !isActiveDog) {
-            filteredPets = (filteredPets.filter(pet => pet.tipo.toLowerCase().includes("gato")));
-        }
-        if (sexOption.length > 0) {
-            filteredPets = (filteredPets.filter(pet => pet.genero.includes(sexOption.toLowerCase())));
-        }
-        if (tamanoOption) {
-            filteredPets = (filteredPets.filter(pet => pet.tamano.toLowerCase() === tamanoOption.toLowerCase()));
-        }
-        setFilteredPets(filteredPets);
-    }
 
     const totalPages = Math.ceil(filteredPets.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -245,4 +241,5 @@ const Adoption = () => {
     );
 };
 
-export default Adoption
+export default Adoption;
+

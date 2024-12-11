@@ -13,8 +13,6 @@ import { useNavigate } from "react-router-dom";
    
 import ImageBg from '@/assets/bg.jpg';
 
-
-
 export default function Index() {
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true); 
