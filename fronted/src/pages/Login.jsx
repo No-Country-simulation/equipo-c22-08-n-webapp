@@ -4,14 +4,10 @@ import { Mail, Lock, HeartHandshake } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import Button from '@/components/ui/button';
-import Button from '@/components/ui/button';
 import InputForm from '@/components/ui/InputForm';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from 'react-hook-form';
-
-
-
 
 
 
@@ -21,11 +17,16 @@ import { useForm } from 'react-hook-form';
 //   .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
 //   .regex(/(?=.*[a-z])/, { message: 'Debe contener al menos una letra minúscula' })
 //   .regex(/(?=.*[A-Z])/, { message: 'Debe contener al menos una letra mayúscula' })
+// 
 //   .regex(/(?=.*[0-9])/, { message: 'Debe contener al menos un número' }),
+  // email: z.string()
+  //   .email({ message: 'Ingrese un correo electrónico válido' }),
 // Define validation schema
+
+
 const loginSchema = z.object({
-  email: z.string()
-    .email({ message: 'Ingrese un correo electrónico válido' }),
+  username: z.string()
+  .min(3, { message: 'El nombre de usuario debe tener al menos 3 caracteres' }),
   password: z.string()
     .min(3, { message: 'La contraseña debe tener al menos 3 caracteres' })
 
@@ -43,7 +44,7 @@ const Login = () => {
   });
 
   const handleInputChange = (name, value) => {
-    // setValue(name, value, { shouldValidate: true });
+    setValue(name, value, { shouldValidate: true });
   };
 
   const onSubmit = (data) => {
@@ -54,7 +55,8 @@ const Login = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: data.email,
+        // email: data.email,
+        username: data.username,
         password: data.password,
         expiresInMins: 60,
       }),
@@ -62,9 +64,10 @@ const Login = () => {
       .then(res => res.json())
       .then(data => {
         
-        if (data.token) {
+        if (data.accessToken) {
           console.log({"token is:":data.token});
           toast.success('Credenciales Correctas');
+          localStorage.setItem('userData', JSON.stringify(data));
           navigate('/pet-profile');
         }
         else { toast.error('Credenciales incorrectas'); }
@@ -92,7 +95,7 @@ const Login = () => {
       <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-2">
 
-          <InputForm
+          {/* <InputForm
             type="email"
             placeholder="Email Address"
             icon={Mail}
@@ -100,8 +103,8 @@ const Login = () => {
             {...register('email')}
             onChange={(value) => handleInputChange('email', value)}
             className="focus:ring-1 focus:ring-beige focus:border-beige"
-          />
-          {/* <InputForm
+          /> */}
+          <InputForm
                 type="text"
                 placeholder="Nombre usuario"
                 icon={Mail}
@@ -109,7 +112,7 @@ const Login = () => {
               {...register('username')}
               onChange={(value) => handleInputChange('email', value)}
                 className="focus:ring-1 focus:ring-beige focus:border-beige"
-              /> */}
+              />
 
           <InputForm
             type="password"

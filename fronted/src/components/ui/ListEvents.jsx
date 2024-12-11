@@ -29,7 +29,7 @@ export default function ListEvents() {
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, [events]); 
+  }, []); 
 
   const handleRegister = (event) => {
     toast.info(`Te has inscrito en el evento: ${event.titulo}`);
@@ -39,15 +39,18 @@ export default function ListEvents() {
     <div className="mt-8 p-4 rounded-lg  
         h-[500px] overflow-y-auto overflow-hidden
         max-h-[400px] custom-scrollbar">
-      <h2 className="text-3xl text-center text-beige font-bold mb-4">Lista de Eventos</h2>
+      <h2 className="text-3xl text-center text-beige 
+        font-bold mb-4">Lista de Eventos</h2>
       <ul className="lg:grid grid-cols-2 gap-4">
         {events.length === 0 && (
-          <li className="bg-white-2 p-4 border-2 border-beige rounded-lg shadow-md h-80 mb-3 lg:mb-0">
+          <li className="bg-white-2 p-4 border-2 border-beige 
+            rounded-lg shadow-md h-80 mb-3 lg:mb-0">
             <p className="text-center text-gray-dark">No hay eventos programados</p>
           </li>
         )}
         {events.map(event => (
-          <li key={event.id} className="bg-white-2 p-4 border-2 border-beige rounded-lg shadow-md h-80 mb-3 lg:mb-0">
+          <li key={event.id} className="bg-white-2 p-4 border-2
+             border-beige rounded-lg shadow-md  mb-3 lg:mb-0">
             <div>
               <h3 className="text-xl font-bold text-center text-primary mb-2">{event.titulo}</h3>
               <p className="text-gray-dark bg-beige-light py-2 border-l-4 rounded border-beige pl-2 mb-1">

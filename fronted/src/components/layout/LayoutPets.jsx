@@ -34,7 +34,7 @@ export default function LayoutPets() {
             Elegir otra mascota
             <SquareDashedMousePointer className="ml-2 w-12 h-12" />
           </Link>
-          <Link
+          {/* <Link
             to="/select-pet"
             className="flex flex-col items-center px-6 py-3
                font-bold  transform 
@@ -43,14 +43,14 @@ export default function LayoutPets() {
           >
             Apoyar la causa
             <Drumstick className="ml-2 w-12 h-12 " />
-          </Link>
+          </Link> */}
         </div>
       {/* </Header> */}
 
       <main className="lg:grid lg:grid-cols-2 md:mt-32 
             gap-8 p-8 overflow-hidden items-center justify-center">
         <PetProfile />
-        
+
         <Outlet />
       </main>
     </div>

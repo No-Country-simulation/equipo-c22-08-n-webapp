@@ -43,11 +43,11 @@ const CardsCarousel = ({ slides, autoTransitionInterval = 3000 }) => {
     return () => window.removeEventListener('resize', updateCardsToShow);
   }, []);
 
-  // Handle no slides scenario
+
   if (!slides || slides.length === 0) {
     return (
       <div className="text-center mt-8">
-        <p>No se encontraron elementos.</p>
+        <p className='text-center text-beige text-2xl text-bold'>No se encontraron mascotas.</p>
       </div>
     );
   }

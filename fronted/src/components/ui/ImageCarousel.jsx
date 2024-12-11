@@ -13,7 +13,7 @@ const ImageCarousel = ({ images=[], clases='' }) => {
     if (!isHovered) {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
-      }, 2000); 
+      }, 4500); 
 
       return () => clearInterval(interval);
     }
@@ -40,7 +40,7 @@ const ImageCarousel = ({ images=[], clases='' }) => {
           initial={{ opacity: 0, x: 50 }}           
           animate={{ opacity: 1, x: 0 }}           
           exit={{ opacity: 0, x: -50 }}           
-          transition={{ duration: 0.3, ease: "easeInOut" }}           
+          transition={{ duration: 0.4, ease: "easeInOut" }}           
           className="w-full h-full flex gap-4 justify-between"         
         >           
           <Image             

@@ -17,7 +17,6 @@ import ShelterEvents from '@/pages/ShelterEvents';
 import  Adoption  from '@/pages/Adoption';
 import DashboardAdopt from '@/pages/DashboardAdopt';
 import UserRequest from '@/pages/UserRequest';
-import Adoption from '@/pages/Adoption';
 import NotFound from '@/pages/NotFound';
 import SectionsEvents from '@/pages/SectionsEvents';
 

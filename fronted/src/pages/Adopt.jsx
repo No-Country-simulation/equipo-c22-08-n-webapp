@@ -36,7 +36,7 @@ export default function Login() {
     <>
 
      {loading ? (
-            <div className="text-center font-bold h-64 flex justify-center items-center">
+            <div className="h-screen text-center font-bold  flex justify-center items-center">
               <p className="text-3xl">Cargando información de la mascota</p>
             </div>
           ) : (
