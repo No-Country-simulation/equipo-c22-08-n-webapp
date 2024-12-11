@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { PawPrint, Home, DollarSign, LogIn } from 'lucide-react';
 
 import Logo from '@/assets/logo1-r.png';
-import Image from  '@/components/ui/Image';
+import Image from '@/components/ui/Image';
+import Dropdown from './Dropdown';
 
 
 
@@ -14,7 +15,7 @@ const Header = () => (
           <div className="flex items-center justify-center space-x-2">
             {/* Logo */}
             {/* <PawPrint className="h-8 w-8 text-beige" /> */}
-            <Image src={Logo} alt='Logo' className=" md:mt-24 h-[200px] w-26 block" setAnimation={true}/>
+            <Image src={Logo} alt='Logo' className=" md:mt-24 h-[200px] w-26 block" setAnimation={true} />
           </div>
         </Link>
         <div className="flex justify-center items-center space-x-4">
@@ -32,6 +33,28 @@ const Header = () => (
             <DollarSign className="inline-block mr-1" size={18} />
             Donar
           </Link> */}
+          <Dropdown/>
+          <Link
+            to="/dashboard"
+            className="hover:text-beige px-3 py-2 rounded-md font-medium"
+          >
+            Solicitudes
+
+          </Link>
+          <Link
+            to="/events"
+            className="hover:text-beige px-3 py-2 rounded-md font-medium"
+          >
+            Eventos
+
+          </Link>
+          <Link
+            to="/adoption"
+            className="hover:text-beige px-3 py-2 rounded-md font-medium"
+          >
+            Adopciones
+
+          </Link>
           <Link
             to="/login"
             className="hover:text-beige px-3 py-2 rounded-md font-medium"

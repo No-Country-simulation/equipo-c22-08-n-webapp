@@ -5,7 +5,6 @@ import DogIconButton from "@/components/ui/DogIconButton.jsx"
 import CatIconButton from "@/components/ui/CatIconButton.jsx"
 import { Filter, FilterBy } from "@/components/ui/Filter.jsx"
 import { Sliders } from "lucide-react"
-import { Link } from "react-router-dom"
 import { ToastContainer } from 'react-toastify';
 import Female from "@/assets/female.png"
 import Male from "@/assets/male.png"
@@ -43,9 +42,9 @@ const Adoption = () => {
         if (sexOption.length > 0) {
             filteredPets = filteredPets.filter(pet => pet.genero.includes(sexOption.toLowerCase()));
         }
-        if (tamanoOption) {
-            filteredPets = filteredPets.filter(pet => pet.tamano.toLowerCase() === tamanoOption.toLowerCase());
-        }
+        // if (tamanoOption) {
+        //     filteredPets = filteredPets.filter(pet => pet.tamano.toLowerCase() === tamanoOption.toLowerCase());
+        // }
         setFilteredPets(filteredPets);
     };
 
@@ -157,10 +156,10 @@ const Adoption = () => {
         <>
 
 
-            <main className="h-full bg-secondary min-w-52">
+            <main className="h-full min-w-52">
 
 
-                <div className="flex flex-row justify-center px-6 py-8">
+                <div className="flex flex-row justify-center py-8 w-[90%] lg:w-[80%] 2xl:[70%] mx-auto">
                     <ToastContainer />
                     <section className="w-full lg:3/4">
                         <article>
@@ -205,18 +204,18 @@ const Adoption = () => {
                             </Filter>
                         </section>
                         <article className="mt-5">
-                            <div className="grid grid-cols-1 sm:py-0 sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4 mt-10">
+                            <div className="grid grid-col-1 sm:py-0 md:grid lg:grid-cols-2 2xl:grid-cols-3 gap-4 mt-10">
                                 {currentPets.map((e) => (
-                                    <Link to={`/adopt/${e?.id}`} key={e?.id}>
+                                   
                                         <Card
                                             key={e?.id}
                                             id={e?.id}
                                             image={e?.imagen}
-                                            selectedCard={false}
+                                            selectedCard={true}
                                             setAnimation={true}
                                             title={e?.nombre}
                                             edad={e?.edad}
-                                            className="bg-beige min-h-28 text-secondary"
+                                            className="bg-black min-h-28 text-white-2 text-4xl shadow-sm shadow-beige hover:animate-bounce"
                                             sectionDetails={true}
                                             description={""}
                                             vacunas={e?.vacunas}
@@ -225,7 +224,7 @@ const Adoption = () => {
                                         >
                                             c
                                         </Card>
-                                    </Link>
+                                   
                                 ))}
                             </div>
                             {totalPages > 1 && (

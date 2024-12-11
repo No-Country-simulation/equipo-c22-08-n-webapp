@@ -64,7 +64,7 @@ const Login = () => {
         if (data.token) {
           console.log({"token is:":data.token});
           toast.success('Credenciales Correctas');
-          navigate('/pet-profile');
+          localStorage.getItem('idPet')?navigate('/pet-profile'):navigate('/adoption');
         }
         else { toast.error('Credenciales incorrectas'); }
       })
