@@ -15,7 +15,8 @@ export default function Pet({ animal }) {
   const handleAdoptClick = () => { 
     localStorage.removeItem('idPet');
     localStorage.setItem('idPet', animal?.id); 
-    navigate('/login'); 
+    const userData = localStorage.getItem('userData');
+    userData? navigate(`/pet-profile`): navigate('/login'); 
   }
 
   if (!animal || Object.keys(animal).length === 0) {
