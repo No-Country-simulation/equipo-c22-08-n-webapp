@@ -25,6 +25,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.28.0",
     "react-toastify": "^10.0.6",
+    "tailwind-scrollbar": "^3.1.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

@@ -9,6 +9,8 @@ import { ToastContainer } from 'react-toastify';
 import Female from "@/assets/female.png"
 import Male from "@/assets/male.png"
 import 'react-toastify/dist/ReactToastify.css';
+// import Image from '@/components/ui/Image';
+// import Gif from '@/assets/gif.gif';
 
 const sexo = [{type:"Macho",image:Male,alt:"An image of male gender"},{type:"Hembra",image:Female,alt:"An image of female gender"}] 
 
@@ -149,8 +151,13 @@ const Adoption = () => {
         return buttons;
     };
 
-    if (loading) return <div className="text-center font-bold h-64 flex justify-center items-center">Cargando...</div>;
-    if (error) return <div className="text-center font-bold h-64 flex justify-center items-center"><img src="@/assets/gif.gif" alt="error" /></div>;
+    if (loading) return <div className="text-center font-bold h-64 text-beige text-4xl flex justify-center items-center">Cargando...</div>;
+    if (error) return (
+        <div className="text-center font-bold h-64 flex justify-center items-center">
+             <img src="@/assets/gif.gif" alt="error" />
+       </div>   
+            //  <Image src={Gif} alt="Logo" className=" h-[200px] w-26 block" setAnimation={true} />
+    );
 
     return (
         <>

@@ -37,7 +37,7 @@ export default function Login() {
 
      {loading ? (
             <div className="h-screen text-center font-bold  flex justify-center items-center">
-              <p className="text-3xl">Cargando información de la mascota</p>
+              <p className="text-3xl text-beige">Cargando información de la mascota</p>
             </div>
           ) : (
             <>

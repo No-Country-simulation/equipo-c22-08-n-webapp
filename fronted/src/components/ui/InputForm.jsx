@@ -14,19 +14,21 @@ const InputForm = forwardRef(({
   label,
   ...props
 }, ref) => {
-
+   
    const handleChange = (e) => {
-    const value = e.target.value;
-    if (onChange) {
-      onChange(value);
-    }
+    // alert('hola');
+    // const value = e.target.value;
+    // console.log(e.target.value);
+    // if (onChange) {
+    //   onChange(value);
+    // }
   };
 
         <p className="mt-1 text-xs text-red">{error}</p>
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={id} className="block text-sm font-medium text-gray mb-1">
+        <label htmlFor={id} className="block t font-medium text-dark mb-1">
           {label}
         </label>
       )}
