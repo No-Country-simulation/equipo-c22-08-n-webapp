@@ -40,7 +40,42 @@ export default {
       borderRadius: {
         '4xl': '2rem',
       }
+    },
+    extend: {
+      keyframes: {
+        bounce: {
+          '0%, 100%': { 
+            transform: 'translateY(-1%)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)'
+          },
+          '50%': { 
+            transform: 'translateY(0)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
+          }
+        }
+      },
+      animation: {
+        'bounce': 'bounce 1s infinite'
+      }
     }
-  }, 
-  plugins: [], 
+  },   
+  plugins: [
+     function ({ addComponents }) {
+      addComponents({
+        '.custom-scrollbar': {
+          '&::-webkit-scrollbar': {
+            width: '0.5rem', 
+          },
+          '&::-webkit-scrollbar-track': {
+            borderRadius: '9999px', 
+            backgroundColor: '#f3f4f6', 
+          },
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '9999px', 
+            backgroundColor: '#FFA07A', 
+          },
+        },
+      });
+    },
+  ], 
 }

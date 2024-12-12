@@ -1,34 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Dog, Bone, Palette, Ruler, 
-  Heart, Shield, Syringe, Clipboard, HeartHandshake,
-  BadgeRussianRubleIcon
+  Dog, Palette, Ruler, Siren,
+  Heart, Shield, Syringe, Clipboard
 } from 'lucide-react';
-
-import Adopt from '@/assets/Adopt.jpg';
-
+import ImageCarousel from '@/components/ui/ImageCarousel';
 import Button from '@/components/ui/Button';
-import Image from '@/components/ui/Image';
+import { removeHtmlTags } from '@/utils/helpers';
 
-const PetProfile = () => {
+export default function PetProfile() {
   const [activeSection, setActiveSection] = useState('info');
   const [isFollowed, setIsFollowed] = useState(false);
+  const [animal, setAnimal] = useState({});
+  const [loading, setLoading] = useState(true);
+  const id = localStorage.getItem('idPet');
 
-  const petData = {
-    name: "Luna",
-    breed: "Golden Retriever",
-    age: 3,
-    gender: "Hembra",
-    weight: 25,
-    color: "Dorado",
-    avatar: Adopt
-  };
-
-  const healthData = [
-    { icon: Shield, label: "Vacunas", value: "Al día" },
-    { icon: Syringe, label: "Desparasitación", value: "Marzo 2024" },
-    { icon: Clipboard, label: "Última Revisión", value: "Enero 2024" }
-  ];
+  useEffect(() => {
+    if (id) {
+      fetch(`${import.meta.env.VITE_API_URL}/animal/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('data', data);
+          setAnimal(data.data);
+          setLoading(false);
+        })
+        .catch(error => {      
+          console.error('Error fetching animal data:', error);
+        });
+    } else {
+      console.error('Invalid ID');
+    }
+  }, [id]);
 
   const renderSection = () => {
     switch(activeSection) {
@@ -38,129 +39,108 @@ const PetProfile = () => {
             <div className="grid grid-cols-3 gap-4 bg-gray-light rounded-xl p-4">
               <div className="flex flex-col items-center">
                 <Ruler className="w-6 h-6 text-primary mb-2" />
-                <span className="font-semibold">{petData.age} años</span>
+                <span className="font-semibold">{animal?.edad}</span>
               </div>
               <div className="flex flex-col items-center">
                 <Dog className="w-6 h-6 text-secondary mb-2" />
-                <span className="font-semibold">{petData.gender}</span>
+                <span className="font-semibold">{animal?.genero}</span>
               </div>
-              <div className="flex flex-col items-center">
+              {/* <div className="flex flex-col items-center">
                 <Palette className="w-6 h-6 text-green-lila mb-2" />
-                <span className="font-semibold">{petData.color}</span>
+                <span className={`font-semibold h-3 w-4 bg-[${animal?.color}]`}></span>
+              </div> */}
+              <div className="flex flex-col items-center">
+                <Siren className="w-6 h-6 text-secondary mb-2" />
+                <span 
+                  className={`font-semibold`}>
+                  {animal?.estado}
+                  </span>
               </div>
             </div>
           </div>
         );
+
       case 'health':
         return (
-          <div className="space-y-3">
-            {healthData.map((item, index) => (
-              <div 
-                key={index} 
-                className="flex items-center bg-gray-light rounded-lg p-3"
-              >
-                <item.icon className="w-6 h-6 text-primary mr-4" />
-                <div className="flex-grow">
-                  <p className="text-sm text-gray">{item.label}</p>
-                  <p className="font-semibold">{item.value}</p>
-                </div>
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-4 bg-gray-light rounded-xl p-4">
+
+              <div className="flex flex-col items-center">
+               <Syringe className="w-6 h-6 text-secondary mb-2" />
+                <span className="font-semibold">Vacunas: 
+                  {animal?.vacunas ? 'Sí' : 'No'}</span>
               </div>
-            ))}
+               <div className="flex flex-col items-center">
+                   <Shield className="w-6 h-6 text-primary mb-2" />
+                   <span className="font-semibold">Esterilizado: 
+                    {animal?.esterilizado ? 'Sí' : 'No'}</span>
+                </div>
           </div>
+        </div>
         );
+
       default:
         return null;
     }
   };
 
   return (
-    // <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
     <div>
-      <div className="bg-white-2 shadow-beige shadow-md m-auto pb-7 max-w-xl overflow-hidden  ">
-        {/* Avatar */}
-        <div className=" h-48 bg-gradient-to-r
-               from-primary to-secondary 
-                flex items-center justify-center">
-          <div className="relative ">     
-            <Image 
-              src={petData.avatar} 
-              alt={petData.name} 
-              setAnimation= {true}
-              className="w-64 rounded-full  shadow-2xl border-white object-cover -top-3"
-            />
+      <div className="bg-beige-light  shadow-md rounded-lg m-auto 
+          pb-20 max-w-2xl ">
+        <div className="bg-gradient-to-r  flex items-center justify-center">
+          <div className="relative w-full">
+            {!loading && animal.imagenes && (
+              <ImageCarousel 
+                images={animal?.imagenes}
+                clases={" w-full border-white -top-3 "}
+              />
+            )}
             <Button 
               onClick={() => setIsFollowed(!isFollowed)}
-              className={`absolute -bottom-2 -right-10  ${
-                isFollowed 
-                  ? "bg-red text-white-2 " 
-                  : " text-gray-dark"
-              }`}
+              className={`absolute -bottom-6 right-32 ${isFollowed ? 
+                    "bg-green-lila text-white-2" : "text-white-2 bg-red"}`}
             >
-              <Heart className="w-6 h-6 fill-current  " />
+              <Heart className="w-7 h-7 fill-current" />
             </Button>
           </div>
         </div>
 
-        {/* Content */}
-        <div className=" px-6 text-center pt-24">
-          <h2 className="text-xl font-bold text-primary mb-2">
-            {petData.name}
+        <div className="px-6 text-center pt-8 ">
+          <h2 className="font-bold text-primary mb-2 text-2xl">
+            {animal?.nombre}
           </h2>
-          <p className="text-secondary mb-4">{petData.breed}</p>
+          <p className="text-secondary mb-4">{animal?.vacunas ? 'Vacunas al día' : 'Vacunas no al día'}</p>
 
-          {/* Navigation */}
-          <div className="flex justify-center mb-6 bg-w ">
+          <div className="flex justify-center mb-6 bg-w">
             <Button 
               onClick={() => setActiveSection('info')}
-              className={`px-4 py-2 rounded-full m-0 transition ${
-                activeSection === 'info' 
-                  ? 'bg-secondary text-white-2' 
-                  : 'bg-transparent'
-              }`}
+              className={`px-4 py-2 rounded-full m-0 transition 
+                ${activeSection === 'info' ? 'bg-secondary text-white-2' : 'bg-transparent'}`}
             >
               Información
             </Button>
             <Button 
               onClick={() => setActiveSection('health')}
-              className={`px-4 py-2 rounded-full  transition ${
-                activeSection === 'health' 
-                  ? 'bg-secondary text-white-2' 
-                  : ''
-              }`}
+              className={`px-4 py-2 rounded-full transition ${activeSection === 'health' ? 'bg-secondary text-white-2' : ''}`}
             >
               Salud
             </Button>
           </div>
 
-          {/* Dynamic Content */}
           <div className="min-h-[200px]">
             {renderSection()}
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            <Button 
-              bgColor="orange" 
-              onClick={() => console.log('Adopting started!')}
-             className=" text-gray-dark font-bold">
-              Adoptar
-              <HeartHandshake/>
-            </Button>
-
-            <Button 
-              bgColor="secondary" 
-              hoverColor="green-lila"
-              onClick={() => console.log('More info!')}
-              icon={Bone}
-              iconPosition="end"
-
-            className="text-white-2 bg-secondary"
-              > Más Info <Bone />
-            </Button>
+            <div className='pt-8'>
+              {/* <Clipboard className="w-6 h-6 text-primary mb-2" /> */}
+              <span className="font-semibold text-xl ">Descripción:</span>
+              <p className="text-secondary text-xl
+                text-wrap">
+                  {removeHtmlTags(animal?.desc_fisica)}
+                  </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-export default PetProfile;

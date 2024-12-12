@@ -15,19 +15,19 @@ const Footer = () => {
   };
 
   return(
-     <footer className="bg-brown text-black py-8">
+     <footer className="  py-8 text-beige">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-between">
             <div className="w-full md:w-1/3 mb-6 md:mb-0">
               <h3 className="text-xl font-bold mb-2">Patitas Felices</h3>
               <p>Conectando mascotas desde {new Date().getFullYear()}</p>
             </div>
-            <div className="w-full md:w-1/3 mb-6 md:mb-0">
+            <div className= "w-full md:w-1/3 mb-6 md:mb-0">
               <h3 className="text-xl font-bold mb-2">¿Qué quieres hacer?</h3>
               <ul>
                 <li>
                   <Link
-                    to="/adopt"
+                    to="/login"
                     className=" hover:text-green-lila px-3 py-2 
                     rounded-md font-medium"
                   >
@@ -35,7 +35,7 @@ const Footer = () => {
                     Adopta
                   </Link>
                   </li>
-                <li>
+                {/* <li>
                  <Link
                   to="/donate"
                   className=" hover:text-green-lila px-3 py-2 rounded-md font-medium"
@@ -43,7 +43,8 @@ const Footer = () => {
                   <DollarSign className="inline-block mr-1" size={18} />
                   Donar
                 </Link>
-                  </li>
+                  </li> */}
+                  
                 {/* <li>
                    <Link
                     to="/login"
@@ -57,7 +58,7 @@ const Footer = () => {
             </div>
             <div className="w-full md:w-1/3 ">
               <h3 className="text-xl font-bold mb-2">Conéctate con nosotros</h3>
-              <form className="flex items-center flex-col lg:flex-row">
+              {/* <form className="flex items-center flex-col lg:flex-row">
                 <InputForm  
                     type="email" 
                     placeholder="Enter your email" 
@@ -66,10 +67,10 @@ const Footer = () => {
                     className="flex-grow p-4 bg-white text-black" 
                   />
                   <Button 
-                  type="submit" className="bg-orange hover:bg-orange-hover text-white  d-block">
-                  Subscribete<DollarSign className='current-fill'/> </Button>
+                  type="submit" className="bg-orange hover:bg-orange-hover text-white d-block">
+                  Unéte<DollarSign className='current-fill'/> </Button>
               
-              </form>
+              </form> */}
             </div>
           </div>
           <div className="mt-8 text-center">

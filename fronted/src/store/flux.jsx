@@ -1,64 +1,81 @@
-import { useFetch } from "../hooks/useFetch.js";
-
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-     pets:[],
-     users:[],
-     selectedPet:[id]
+      // Global state variables
+      user: null,
+      pets: [],
+      adoptions: [],
+      events: [],
+      
+      // Authentication state
+      isAuthenticated: false,
+      token: null,
+      
+      // Permissions and roles
+      userRoles: [],
+      userPermissions: []
     },
     actions: {
-      getpets: (src)=>{
-        setStore({...pets,"pets":useFetch(src)})
+      // Action to log in user
+      login: (userData) => {
+        const store = getStore();
+        setStore({
+          ...store,
+          user: userData,
+          isAuthenticated: true,
+          token: userData.token,
+          userRoles: userData.roles || [],
+          userPermissions: userData.permissions || []
+        });
       },
-      getUser: (src)=>{
-        setStore({...users,"users":useFetch(src)})
+      
+      // Action to log out user
+      logout: () => {
+        const store = getStore();
+        setStore({
+          ...store,
+          user: null,
+          isAuthenticated: false,
+          token: null,
+          userRoles: [],
+          userPermissions: []
+        });
       },
-      setPet: (id)=>{
-        setStore({"selectedPet":id})
-      },
-
-      login: async (credentials) => {
-        try {
-          const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-          });
-          
-          const data = await response.json();
-          
-          if (response.ok) {
-            // Guardar token y datos de usuario
-            localStorage.setItem('token', data.token);
-            
-            setStore({
-              user: {
-                id: data.user.id,
-                email: data.user.email,
-                role: data.user.role,
-                name: data.user.name
-              },
-              token: data.token,
-              isAuthenticated: true,
-              userRole: data.user.role,
-            });
-            
-            return {
-              ...data.user,
-              token: data.token
-            };
-          } else {
-            throw new Error(data.message || 'Error de inicio de sesión');
+      
+      // Action to update user profile
+      updateProfile: (updatedProfile) => {
+        const store = getStore();
+        setStore({
+          ...store,
+          user: {
+            ...store.user,
+            ...updatedProfile
           }
-        } catch (error) {
-          console.error('Login error:', error);
-          throw error;
-        }
-     },
-    }
-  }
-  
-};
+        });
+      },
+      
 
-export default getState;
+      addPet: (pet) => {
+        const store = getStore();
+        setStore({
+          ...store,
+          pets: [...store.pets, pet]
+        });
+      },
+      
+      // Action to check if user has a specific role
+      hasRole: (roleName) => {
+        const store = getStore();
+        return store.userRoles.some(role => role.name === roleName); 
+      },   
+      
+      // Action to check if user has a specific permission
+      hasPermission: (permissionName) => {
+        const store = getStore();
+        return store.userPermissions.some(permission => permission.name === permissionName);
+      }
+    }
+  };
+};      
+
+export default getState;        

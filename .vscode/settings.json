@@ -1,0 +1,12 @@
+{
+  "workbench.layoutControl.type": "toggles",
+  "workbench.list.scrollByPage": true,
+  "workbench.list.smoothScrolling": false,
+  "workbench.reduceMotion": "on",
+  "workbench.colorTheme": "Ayu Dark Bordered",
+  "workbench.preferredLightColorTheme": "Ayu Dark",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.sideBar.location": "right",
+  "workbench.tree.indent": 5,
+  "workbench.editor.centeredLayoutFixedWidth": false
+}
