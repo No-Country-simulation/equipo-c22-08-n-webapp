@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { PawPrint, CalendarDays, Phone } from "lucide-react"
 import { useNavigate } from "react-router-dom";
 
-const DashboardAdopt = () => {
+const DashboardAdopt = () => {  
   const navigate = useNavigate();
+  const getPetInfo = (petId) => {
+
+  }
   const [requests] = useState([
     {
       id: 1,
       userName: "Sarah Johnson",
       userAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
       petName: "Max",
-      petImage: "https://images.unsplash.com/photo-1543466835-00a7907e9de1",
-      petId: 4,
+      petImage: "https://images.unsplash.com/photo-1517849845537-4d257902454a",
+      petId: 303,
       date: "2024-02-15",
       contact: "(555) 123-4567",
       status: "Pending"

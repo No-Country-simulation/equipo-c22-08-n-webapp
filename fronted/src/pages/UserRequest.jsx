@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
 import { CircleArrowLeft, User, PawPrint, Phone, Mail, MapPinned } from "lucide-react";
 import {Link} from 'react-router-dom'
 
 const UserRequest = () => {
   const [isApproved, setIsApproved] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
-
+  const { data: pet , loading, error } =useFetch(`${import.meta.env.VITE_API_URL}/animal/${localStorage.getItem('idPet')}`);
+  
   useEffect(() => {
-
-  })
+  
+  },[]);
 
   const handleApprove = () => {
     setIsApproved(true);
@@ -39,7 +41,7 @@ const UserRequest = () => {
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-center text-white-2">REVISIÓN DE SOLICITUD</h2>
+        <h2 className="text-3xl font-bold mt-5 mb-10 text-center text-white-2">REVISIÓN DE SOLICITUD</h2>
         <div className="bg-black   shadow-xl rounded-lg overflow-hidden">
           {/* Header */}
           <div className="bg-beige p-6">
