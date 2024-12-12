@@ -163,7 +163,7 @@ const Adoption = () => {
                     <ToastContainer />
                     <section className="w-full lg:3/4">
                         <article>
-                            <h2 className="text-center text-green-lila font-bold font-serif text-2xl">ENCONTRAR PATITAS POR:</h2>
+                            <h2 className="text-center text-white-2 font-bold font-serif text-7xl">ENCUENTRA A TU MASCOTA IDEAL</h2>
                             <div className="h-22 flex justify-center align-center">
                                 <button
                                     onClick={() => handleCatDogButton('dog')}

@@ -68,7 +68,11 @@ export default function Index() {
               bgColor="secondary"
               hoverColor="green-lila"
 
-              onClick={() => navigate('/login')}
+              onClick={() => {
+                const userData = localStorage.getItem('userData');
+                console.log("soy la data : ",userData)
+                localStorage.getItem('userData')?navigate('/adoption'):navigate('/login')
+              }}
             >
               Adopta
               <Cat className="mr-1" />
