@@ -47,9 +47,8 @@ export default function LayoutPets() {
         </div>
       {/* </Header> */}
 
-      <main className="lg:grid lg:grid-cols-2 md:mt-32 
-            gap-8 p-8 overflow-hidden items-center justify-center">
-        <PetProfile />
+      <main className="">
+        {/* <PetProfile /> */}
 
         <Outlet />
       </main>

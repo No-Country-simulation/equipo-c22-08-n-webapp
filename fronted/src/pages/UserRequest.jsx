@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useFetch } from "@/hooks/useFetch";
 import { CircleArrowLeft, User, PawPrint, Phone, Mail, MapPinned } from "lucide-react";
 import {Link} from 'react-router-dom'
 
-const UserProfile = () => {
+const UserRequest = () => {
   const [isApproved, setIsApproved] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
-
+  const { data: pet , loading, error } =useFetch(`${import.meta.env.VITE_API_URL}/animal/${localStorage.getItem('idPet')}`);
+  
   useEffect(() => {
-
-  })
+  
+  },[]);
 
   const handleApprove = () => {
     setIsApproved(true);
@@ -37,24 +39,27 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+        <h2 className="text-3xl font-bold mt-5 mb-10 text-center text-white-2">REVISIÓN DE SOLICITUD</h2>
+        <div className="bg-black   shadow-xl rounded-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-blue-600 p-6">
+          <div className="bg-beige p-6">
             <div className="flex items-center">
               <Link to={"/dashboard"}>
                 <button className="text-white mr-4">
                   <CircleArrowLeft className="h-6 w-6" />
                 </button>
               </Link>
-              <h1 className="text-2xl font-bold text-white">Perfil de usuario</h1>
+              
             </div>
           </div>
 
           {/* User Info Section */}
-          <div className="p-6 border-b">
+          <div className="p-6 border-b bg-beige-light">
+          <h1 className="text-2xl font-bold text-white mb-4">Perfil de usuario</h1>
             <div className="flex flex-col md:flex-row items-center">
+              
               <img
                 src={userData.profileImage}
                 alt="Profile"
@@ -85,7 +90,7 @@ const UserProfile = () => {
           </div>
 
           {/* Pet Details Section */}
-          <div className="p-6 border-b">
+          <div className="p-6 border-t-b bg-beige-light">
             <h3 className="text-xl font-semibold mb-4 flex items-center">
               <PawPrint className="mr-2" />
               Solicitud de Adopción de Mascota
@@ -109,13 +114,13 @@ const UserProfile = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="p-6 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="p-6 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 bg-beige">
             {!isRejected && (
               <button
                 onClick={handleApprove}
                 className={`px-6 py-2 rounded-lg font-semibold ${isApproved
-                  ? "bg-green-100 text-green-800 cursor-default"
-                  : "bg-green-600 text-white hover:bg-green-700"}`}
+                  ? "bg-green text-green-800 cursor-default"
+                  : "bg-green-lila text-white hover:bg-green-700"}`}
               >
                 {isApproved ? "Adoption Approved" : "Approve Adoption"}
               </button>
@@ -124,8 +129,8 @@ const UserProfile = () => {
               <button
                 onClick={handleReject}
                 className={`px-6 py-2 rounded-lg font-semibold ${isRejected
-                  ? "bg-red-100 text-red-800 cursor-default"
-                  : "bg-red-600 text-white hover:bg-red-700"}`}
+                  ? "bg-red text-red-800 cursor-default"
+                  : "bg-brown text-white hover:bg-red-700"}`}
               >
                 {isRejected ? "Adoption Rejected" : "Reject Adoption"}
               </button>
@@ -137,4 +142,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserRequest;

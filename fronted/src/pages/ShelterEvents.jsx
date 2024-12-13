@@ -50,11 +50,9 @@ const ShelterEvents = ({ onlySelect = false }) => {
   const [events, setEvents] = useState([]);
   const [view, setView] = useState(Views.MONTH);
 
-  // Cargar eventos desde localStorage o usar eventos iniciales
   useEffect(() => {
     const storedEvents = localStorage.getItem('eventsLocalesPets');
     if (storedEvents) {
-      // Convertir fechas de cadenas a objetos Date
       const parsedEvents = JSON.parse(storedEvents).map(event => ({
         ...event,
         inicio: new Date(event.inicio),
@@ -62,7 +60,6 @@ const ShelterEvents = ({ onlySelect = false }) => {
       }));
       setEvents(parsedEvents);
     } else {
-      // Si no existen, guardar los eventos iniciales
       localStorage.setItem('eventsLocalesPets', JSON.stringify(initialEvents));
       setEvents(initialEvents);
     }
@@ -115,7 +112,7 @@ const ShelterEvents = ({ onlySelect = false }) => {
     };
     const updatedEvents = [...events, newEventWithId];
     setEvents(updatedEvents);
-    localStorage.setItem('eventsLocalesPets', JSON.stringify(updatedEvents)); // Actualizar localStorage
+    localStorage.setItem('eventsLocalesPets', JSON.stringify(updatedEvents)); 
     toast.success('Evento agregado exitosamente!');
     closeModal();
   };
@@ -123,7 +120,7 @@ const ShelterEvents = ({ onlySelect = false }) => {
   const handleDeleteEvent = () => {
     const updatedEvents = events.filter(event => event.id !== selectedEvent.id);
     setEvents(updatedEvents);
-    localStorage.setItem('eventsLocalesPets', JSON.stringify(updatedEvents)); // Actualizar localStorage
+    localStorage.setItem('eventsLocalesPets', JSON.stringify(updatedEvents)); 
     toast.success('Evento eliminado exitosamente!');
     closeModal();
   };
@@ -140,7 +137,7 @@ const ShelterEvents = ({ onlySelect = false }) => {
     link.click();
   };
 
-  // Custom event component to show more information
+
   const CustomEvent = ({ event }) => {
     return (
       <div className="custom-event flex items-center">
@@ -154,7 +151,6 @@ const ShelterEvents = ({ onlySelect = false }) => {
     );
   };
 
-  // Memoize events to prevent unnecessary re-renders
   const memoizedEvents = useMemo(() => events, [events]);
 
   return (
@@ -173,7 +169,7 @@ const ShelterEvents = ({ onlySelect = false }) => {
           onView={nextView => setView(nextView)}
           className="p-4"
           components={{
-            event: CustomEvent // Use custom event component
+            event: CustomEvent 
           }}
           eventPropGetter={(event) => ({
             className: 'p-2 rounded-md mb-2 bg-gray text-white flex items-center justify-between',

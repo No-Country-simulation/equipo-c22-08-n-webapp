@@ -4,10 +4,12 @@ export default {
   theme: {     
     colors: {
       // Colores personalizados
-      ...import('tailwindcss/colors'),
+      ...require('tailwindcss/colors'),
 
       'primary': '#153448',
       'secondary': '#3C5B6F',
+      'secondary-light': '#b9deff',
+      'secondary-strong':'#3148f7',
       'beige': '#DFD0B8',
       'brown': '#96876f',
       'green': '#13ce66',
@@ -25,7 +27,7 @@ export default {
       'red': "#982B1C",
       'beige-light': '#F4EED8',
       // 'success': '#2E7D32',
-      
+      'yellow-light': "#f9f2b0"
       // Mantener los colores predeterminados de Tailwind
     },
     fontFamily: {
@@ -39,9 +41,7 @@ export default {
       },
       borderRadius: {
         '4xl': '2rem',
-      }
-    },
-    extend: {
+      },
       keyframes: {
         bounce: {
           '0%, 100%': { 

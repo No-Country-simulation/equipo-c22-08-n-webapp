@@ -86,7 +86,7 @@ export default function PetProfile() {
 
   return (
     <div>
-      <div className="bg-beige-light  shadow-md rounded-lg m-auto 
+      <div className="bg-beige-light bg-opacity-85  shadow-md rounded-lg m-auto 
           pb-20 max-w-2xl ">
         <div className="bg-gradient-to-r  flex items-center justify-center">
           <div className="relative w-full">
