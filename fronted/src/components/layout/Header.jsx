@@ -47,7 +47,8 @@ const Header = () => {
               <Image src={Logo} alt="Logo" className=" h-[200px] w-26 block" setAnimation={true} />
             </div>
           </Link>
-          <button className='z-10 m-5' onClick={()=>setIsAdmin(!isAdmin)}>{isAdmin? 'Admin': 'User'}</button>
+          <button className='z-10 m-5' onClick={()=>{
+            setIsAdmin(!isAdmin); localStorage.setItem('isAdmin', !isAdmin)}}>{isAdmin? 'Admin': 'User'}</button>
           <div className="flex justify-center items-center space-x-4">
 
             {isLoggedIn && isAdmin && (

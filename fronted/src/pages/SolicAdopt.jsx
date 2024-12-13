@@ -214,8 +214,10 @@ const CreateAccountMultiStep = () => {
         ...formData,
         ...currentStepData,
         idMascota,
+        fechaSolicitud: new Date().toISOString(),
         solicitudInfo: {
           tipoSolicitud: "adopcion",
+          status: "pendiente"
         }
       };
       setFormData(newFormData);

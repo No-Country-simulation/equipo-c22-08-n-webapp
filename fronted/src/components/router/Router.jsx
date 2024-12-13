@@ -125,7 +125,6 @@ const Router = createBrowserRouter([
         index:true,
         element:<Adoption/>,      
       }
-  
       
     ]
   },
