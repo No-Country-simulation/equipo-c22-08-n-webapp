@@ -30,27 +30,57 @@ const DashboardAdopt = () => {
   const navigate = useNavigate();
   const solicitudes = JSON.parse(localStorage.getItem("solicitud"));
   const [allPets, setAllPets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // const getPetInfo = async () => {
+  //   for (let i = 0; i < solicitudes.length; i++) {
+  //     setIsLoading(true);
+  //     console.log(solicitudes.length)
+  //     console.log("solicitudes",solicitudes)
+  //     try {
+  //       const response = await fetch(`${import.meta.env.VITE_API_URL}/animal/${solicitudes[i].idMascota}`);
+  //       console.log("response", response)
+  //       const data = await response.json();
+  //       console.log("Mascotas", data.data)
+  //       setAllPets([...allPets, data.data]);
+  //       setIsLoading(false);
+  //       return;
+      
+  //     } catch (error) {
+  //       console.error('Error fetching pet information', error);
+  //     }        
+  //   }
+  // };
+  // localStorage.setItem('solicitud', JSON.stringify(solicitudes));
+  // if (solicitudes && solicitudes.length > 0) {
+  //   getPetInfo();
+  // }
   
   useEffect(() => {
     const getPetInfo = async () => {
-      for (let i = 0; i < solicitudes.length; i++) {
-        console.log(solicitudes.length)
-        console.log("solicitudes",solicitudes)
-        try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL}/animal/${solicitudes[i].idMascota}`);
-          console.log("response", response)
-          const data = await response.json();
-          console.log("Mascotas", data.data)
-          setAllPets([...allPets, data.data]);
-          return data;
-        } catch (error) {
-          console.error(error);
-        }
+      try {
+        // Use Promise.all to fetch all pet details concurrently
+        const petPromises = solicitudes.map(async (solicitud) => {
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/animal/${solicitud.idMascota}`);
+          return response.json();
+        });
+  
+        // Wait for all promises to resolve
+        const petDetails = await Promise.all(petPromises);
+  
+        // Extract the data from the responses
+        const petData = petDetails.map(detail => detail.data);
+  
+        // Update state with all pet details
+        setAllPets(petData);
+      } catch (error) {
+        console.error('Error fetching pet information:', error);
       }
     };
-    localStorage.setItem('solicitud', JSON.stringify(solicitudes));
-    getPetInfo();
+  
+    if (solicitudes && solicitudes.length > 0) {
+      getPetInfo();
+    }
   }, []);
   const formatDate = (dateRequest) => {
     const dateUTC = new Date(dateRequest);
@@ -97,8 +127,6 @@ const DashboardAdopt = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
             {solicitudes.map((request, index) => (
-              console.log("all pets son", allPets),
-
               <div
                 key={request.id}
                 className="bg-black rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105"
