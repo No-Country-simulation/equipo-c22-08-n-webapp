@@ -4,7 +4,7 @@ export default {
   theme: {     
     colors: {
       // Colores personalizados
-      ...import('tailwindcss/colors'),
+      ...require('tailwindcss/colors'),
 
       'primary': '#153448',
       'secondary': '#3C5B6F',
@@ -41,9 +41,7 @@ export default {
       },
       borderRadius: {
         '4xl': '2rem',
-      }
-    },
-    extend: {
+      },
       keyframes: {
         bounce: {
           '0%, 100%': { 

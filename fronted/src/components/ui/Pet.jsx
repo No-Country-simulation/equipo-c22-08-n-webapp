@@ -36,14 +36,15 @@ export default function Pet({ animal }) {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center lg:p-28 ">
-      <div className="max-w-2xl rounded overflow-hidden   w-full">
-        <div className="flex flex-col justify-center items-center lg:flex-row">
+    <div className="flex flex-col w-[90%] mx-auto
+      lg:flex-row justify-center items-center lg:py-28 ">
+      <div className="max-w-4xl rounded overflow-hidden   w-full">
+        <div className="lg:flex flex-col justify-center items-center lg:flex-row">
           <div className=" lg:w-1/2">
             <ImageCarousel images={animal?.imagenes} />
           </div>
           
-          <div className="w-full lg:w-1/2 p-7 bg-beige shadow-2xl ">
+          <div className="w-full lg:w-1/2 p-7 bg-beige bg-opacity-90 shadow-2xl ">
             <h2 className="font-bold text-4xl text-center text-secondary">
               {removeHtmlTags(animal?.nombre)}
             </h2>

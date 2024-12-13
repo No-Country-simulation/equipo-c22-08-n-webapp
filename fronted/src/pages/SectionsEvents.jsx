@@ -18,7 +18,10 @@ export default function SectionsEvents() {
    <div>
     <Header />
    </div>
-      <h1 className="text-center text-beige text-4xl font-bold">Crea tus eventos </h1>
+      <h1 className="text-center mt-10
+        text-beige text-4xl font-bold">
+          Crea tus eventos 
+      </h1>
 
       <ShelterEvents  />
     </div>

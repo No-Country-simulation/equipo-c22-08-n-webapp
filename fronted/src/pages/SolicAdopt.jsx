@@ -9,6 +9,7 @@ import SelectForm from '@/components/ui/SelectForm';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import PetProfile from '@/hooks/PetProfile';
 
 
 // Validation Schemas
@@ -47,7 +48,8 @@ const Step1 = () => {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-semibold text-gray-dark mb-4">Información Personal</h2>
-      <InputForm
+      
+        <InputForm
         label="Nombre"
         type="text"
         icon={User}
@@ -67,6 +69,7 @@ const Step1 = () => {
         error={errors.apellido?.message}
         {...register('apellido')}
       />
+      
       <InputForm
         label="Edad"
         type="number"
@@ -83,15 +86,25 @@ const Step2 = () => {
   const { register, formState: { errors } } = useFormContext();
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-gray-900 mb-4">Ubicación</h2>
-      <InputForm
-        label="Ciudad"
-        type="text"
-        icon={MapPin}
-        placeholder="Bogota, Medellin, etc."
-        error={errors.ciudad?.message}
-        {...register('ciudad')}
-      />
+      <h2 className="text-xl font-semibold text-primary mb-4">Ubicación</h2>
+      <div className='md:flex gap-3'>
+        <InputForm
+          label="Ciudad"
+          type="text"
+          icon={MapPin}
+          placeholder="Bogota, Medellin, etc."
+          error={errors.ciudad?.message}
+          {...register('ciudad')}
+        />
+        <InputForm
+          label="Código Postal"
+          type="text"
+          icon={MapPinHouse}
+          placeholder="12345"
+          error={errors.codigoPostal?.message}
+          {...register('codigoPostal')}
+        />
+      </div>
       <InputForm
         label="Dirección"
         type="text"
@@ -100,14 +113,7 @@ const Step2 = () => {
         error={errors.direccion?.message}
         {...register('direccion')}
       />
-      <InputForm
-        label="Código Postal"
-        type="text"
-        icon={MapPinHouse}
-        placeholder="12345"
-        error={errors.codigoPostal?.message}
-        {...register('codigoPostal')}
-      />
+     
     </div>
   );
 };
@@ -116,24 +122,28 @@ const Step3 = () => {
   const { register, formState: { errors } } = useFormContext();
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-gray mb-4">Métodos de Contacto</h2>
-      <InputForm
-        label="Correo Electrónico"
-        type="email"
-        icon={Mail}
-        placeholder="ejemplo@gmail.com"
-        error={errors.email?.message}
-        {...register('email')}
-      />
-      <InputForm
-        label="Teléfono"
-        type="tel"
-        icon={Phone}
-        placeholder="+57 323 456 7890"
-        error={errors.telefono?.message}
-        {...register('telefono')}
-      />
-      <SelectForm
+      <h2 className="
+            text-xl font-semibold text-primary p-4 
+            bg-opacity-60 inline mb-4">Métodos de Contacto</h2>
+         <div className='md:flex gap-3'>
+        <InputForm
+          label="Correo Electrónico"
+          type="email"
+          icon={Mail}
+          placeholder="ejemplo@gmail.com"
+          error={errors.email?.message}
+          {...register('email')}
+        />
+        <InputForm
+          label="Teléfono"
+          type="tel"
+          icon={Phone}
+          placeholder="+57 323 456 7890"
+          error={errors.telefono?.message}
+          {...register('telefono')}
+        />
+      </div>  
+      {/* <SelectForm
         label="Método de Contacto Preferido"
         options={[
           { value: 'email', label: 'Email' },
@@ -142,7 +152,7 @@ const Step3 = () => {
         ]}
         error={errors.metodoContacto?.message}
         {...register('metodoContacto')}
-      />
+      /> */}
     </div>
   );
 };
@@ -200,7 +210,6 @@ const CreateAccountMultiStep = () => {
     if (valid) {
       const currentStepData = methods.getValues();
 
-      // Acumular los datos en el estado `formData`
       const newFormData = {
         ...formData,
         ...currentStepData,
@@ -211,13 +220,6 @@ const CreateAccountMultiStep = () => {
       };
       setFormData(newFormData);
 
-      // Guardar los datos completos de la solicitud en localStorage
-      const existingSolicitudes = JSON.parse(localStorage.getItem('solicitud')) || [];
-      
-      const updatedSolicitudes = [...existingSolicitudes, newFormData];
-      
-      localStorage.setItem('solicitud', JSON.stringify(updatedSolicitudes));
-
       
       if (step === 1) {
         setStep(2);
@@ -225,7 +227,18 @@ const CreateAccountMultiStep = () => {
         setStep(3);
       } else {
         console.log('Datos completos de la solicitud:', newFormData);
-        toast.success('Solicitud completada exitosamente!');
+        toast.success('Solicitud completada exitosamente!')
+          
+        const existingSolicitudes = JSON.parse(localStorage.getItem('solicitud')) || [];
+        
+        const updatedSolicitudes = [...existingSolicitudes, newFormData];
+        const solicitudIndex = existingSolicitudes.findIndex(solicitud => solicitud.idMascota === idMascota);
+        if (solicitudIndex !== -1) {
+          existingSolicitudes[solicitudIndex] = newFormData;
+        } else {
+          existingSolicitudes.push(newFormData);
+        }
+        localStorage.setItem('solicitud', JSON.stringify(updatedSolicitudes));
 
         setTimeout(() => {
           navigate('/adoption');
@@ -238,7 +251,14 @@ const CreateAccountMultiStep = () => {
   const onPrev = () => setStep(step - 1);
 
   return (
-    <div className="shadow-md bg-beige-light rounded-xl m-auto lg:m-0 max-w-2xl ml-auto mt-2">
+    <main className='lg:grid lg:grid-cols-2 md:mt-32 
+                gap-8 p-8 overflow-hidden items-center justify-center'>
+      <PetProfile/>
+
+    <div className="shadow-md bg-beige-light 
+        bg-opacity-80 rounded-xl m-auto 
+        lg:m-0 max-w-3xl ml-auto mt-2">
+        
       <FormProvider {...methods}>
         <ToastContainer />
         <form className="shadow-gray shadow-md rounded-xl">
@@ -274,7 +294,8 @@ const CreateAccountMultiStep = () => {
           </div>
         </form>
       </FormProvider>
-    </div>
+    </div> 
+    </main>
   );
 };
 
