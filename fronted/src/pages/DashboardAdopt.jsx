@@ -28,12 +28,15 @@ import { useNavigate } from "react-router-dom";
 
 const DashboardAdopt = () => {
   const navigate = useNavigate();
-  const solicitudes = JSON.parse(localStorage.getItem("solicitud")) || [];
+  const solicitudes = JSON.parse(localStorage.getItem("solicitud"));
   const [allPets, setAllPets] = useState([]);
 
+  
   useEffect(() => {
     const getPetInfo = async () => {
       for (let i = 0; i < solicitudes.length; i++) {
+        console.log(solicitudes.length)
+        console.log("solicitudes",solicitudes)
         try {
           const response = await fetch(`${import.meta.env.VITE_API_URL}/animal/${solicitudes[i].idMascota}`);
           console.log("response", response)
@@ -48,10 +51,7 @@ const DashboardAdopt = () => {
     };
     localStorage.setItem('solicitud', JSON.stringify(solicitudes));
     getPetInfo();
-  }, [allPets]);
-
-
-  const avatar = []
+  }, []);
   const formatDate = (dateRequest) => {
     const dateUTC = new Date(dateRequest);
 
@@ -90,7 +90,7 @@ const DashboardAdopt = () => {
           Adopciones por Revisar
         </h1>
 
-        {solicitudes? (
+        {!solicitudes ? (
           <div className="text-center py-12 bg-black rounded-lg shadow-lg mt-6">
             <p className="text-white text-lg">No hay solicitudes de adopción.</p>
           </div>

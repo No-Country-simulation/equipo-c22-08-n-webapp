@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useFetch } from "@/hooks/useFetch";
 import { CircleArrowLeft, User, PawPrint, Phone, Mail, MapPinned } from "lucide-react";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { removeHtmlTags } from '@/utils/helpers'
 
 
@@ -11,29 +11,38 @@ const UserRequest = () => {
   const [solicitud, setSolicitud] = useState(JSON.parse(localStorage.getItem('solicitud'))[localStorage.getItem('solicitudIndex')]);
   const { data: pet, loading, error } = useFetch(`${import.meta.env.VITE_API_URL}/animal/${localStorage.getItem('idPet')}`);
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin') === "true");
+  const navigate = useNavigate();
 
 
-
-
+  useEffect(() => {
+    
+  }, [setIsApproved]);
   const handleApprove = () => {
+    const auxSolicitudes = JSON.parse(localStorage.getItem('solicitud'));
     const auxSolicitud = solicitud
-    auxSolicitud.status = "aprobada";
-    setIsApproved(true);
+    auxSolicitudes[localStorage.getItem('solicitudIndex')].solicitudInfo.status = "aprobada"
+    auxSolicitud.solicitudInfo.status="aprobada"
+    console.log(auxSolicitudes)
     setIsRejected(false);
-    setSolicitud(solicitud);
-    localStorage.setItem('solicitud', solicitud);
+    setIsApproved(true);
+    setSolicitud(auxSolicitud);
+    localStorage.setItem('solicitud', JSON.stringify(auxSolicitudes));
   };
-
+  
   const handleReject = () => {
+    const auxSolicitudes = JSON.parse(localStorage.getItem('solicitud'));
     const auxSolicitud = solicitud
-    auxSolicitud.status = "rechazada";
+    auxSolicitudes[localStorage.getItem('solicitudIndex')].solicitudInfo.status = "rechazada"
     setIsRejected(true);
     setIsApproved(false);
-    setSolicitud(solicitud);
-    localStorage.setItem('solicitud', solicitud);
+    setSolicitud(auxSolicitud);
   };
+  
 
-
+  const onClickHandler = (e)=>{
+    console.log(isAdmin)
+    isAdmin? navigate("/dashboard"): navigate("/adoption")
+  }
 
   return <>
     {
@@ -45,11 +54,11 @@ const UserRequest = () => {
               {/* Header */}
               <div className="bg-beige p-6">
                 <div className="flex items-center">
-                  <Link to={"/dashboard"}>
-                    <button className="text-white mr-4">
+                
+                    <button className="text-white mr-4" onClick={(e)=>onClickHandler(e)}>
                       <CircleArrowLeft className="h-6 w-6" />
                     </button>
-                  </Link>
+                  
 
                 </div>
               </div>
@@ -116,13 +125,8 @@ const UserRequest = () => {
 
               {/* Action Buttons */}
               {
-                !isAdmin && (solicitud.solicitudInfo.status === "pendiente"
-                  ? (
-                    <div className="p-6 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 bg-beige">Adopcion pendiente</div>)
-                  : (<div className="p-6 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 bg-beige">Adopcion Aprobada</div>))
-              }
-              {isAdmin && (
-                <div className="p-6 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 bg-beige">
+                isAdmin && solicitud.solicitudInfo.status === "pendiente" ?(                  
+                    <div className="p-6 flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 bg-beige">
                   {!isRejected && (
                     <button
                       onClick={handleApprove}
@@ -144,7 +148,11 @@ const UserRequest = () => {
                     </button>
                   )}
                 </div>
-              )}
+                ) 
+                :                 
+                (<div className={`p-6 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 bg-beige ${solicitud.solicitudInfo.status==="aprobada" ? "bg-green-lila text-white hover:bg-green-700" : "bg-brown text-white hover:bg-red-700"}`}>Adopcion {solicitud.solicitudInfo.status}</div>)
+              }
+             
 
             </div>
           </div>
